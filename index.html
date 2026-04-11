@@ -26,8 +26,6 @@
         .search-input { background-color: #020617; border: 2px solid #334155; color: #ffffff; }
         .list-item { background-color: #1e293b; border: 1px solid #334155; transition: 0.2s; }
         .list-item:hover { background-color: #334155; transform: translateX(4px); }
-        
-        /* 頁尾樣式 */
         footer { border-top: 1px solid #1e293b; }
         .copyright-text { letter-spacing: 0.02em; }
     </style>
@@ -73,7 +71,7 @@
 
         <div id="search-section" class="sticky top-4 z-20 mb-8">
             <h2 class="text-sm font-black text-slate-500 mb-2 px-1 tracking-widest uppercase">技能資料庫搜尋</h2>
-            <input v-model="skillSearch" type="text" placeholder="輸入名稱或編號 (如: #124)" class="search-input w-full rounded-xl px-6 py-4 shadow-2xl text-lg font-bold">
+            <input v-model="skillSearch" type="text" placeholder="輸入名稱或編號 (如: #01)" class="search-input w-full rounded-xl px-6 py-4 shadow-2xl text-lg font-bold">
         </div>
 
         <div class="space-y-2 mb-16">
@@ -84,6 +82,9 @@
                     <span class="text-sm text-slate-400 font-medium truncate ml-2">{{ skill.source }}</span>
                 </div>
                 <div class="text-[10px] font-mono text-slate-600 font-bold bg-black/20 px-2 py-0.5 rounded shrink-0 ml-4">P{{ skill.patch }}</div>
+            </div>
+            <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-500">
+                找不到相關技能
             </div>
         </div>
 
@@ -106,13 +107,10 @@
         createApp({
             setup() {
                 // ==========================================
-                // 管理員更新區塊 (2026/04/07 - 04/14)
+                // 管理員更新區塊 (每週更新這裡即可)
                 // ==========================================
-                
-                // 本週日期
                 const weeklyDateRange = "2026/04/07 — 2026/04/14";
 
-                // 本週挑戰
                 const weeklyData = [
                     { 
                         level: "初級", 
@@ -124,13 +122,13 @@
                         level: "中級", 
                         stageId: "03", 
                         achievements: ["水系大師"], 
-                        skills: ["#01 水砲", "#09 苦難之歌", "#109 魔法吐息", "#24 投擲沙丁魚"] 
+                        skills: ["#01 水砲", "#09 苦悶之歌", "#109 魔力吐息", "#24 投擲沙丁魚"] 
                     },
                     { 
                         level: "上級", 
                         stageId: "18", 
                         achievements: ["標準通關", "高階法師"], 
-                        skills: ["#63 音爆", "#124 終有一死", "#105 炎神之羽", "#102 赤紅聖歌", "#94 鬼宿腳"] 
+                        skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈", "#102 如意大旋風", "#103 鬼宿腳"] 
                     }
                 ];
 
@@ -148,7 +146,6 @@
                                        d.level === "中級" ? "bg-sky-900/40 text-sky-400 border-sky-500/20" : 
                                        "bg-purple-900/40 text-purple-400 border-purple-500/20";
                         
-                        // 處理推薦技能顯示 (相容舊格式與帶名稱格式)
                         const skillNames = d.skills.map(code => {
                             const noMatch = code.match(/#(\d+)/);
                             if (noMatch) {
@@ -169,18 +166,32 @@
                 });
 
                 const filteredSkills = computed(() => {
-                    const q = skillSearch.value.toLowerCase().trim();
+                    let q = skillSearch.value.toLowerCase().trim();
                     if (!q) return U;
-                    const text = q.replace('#','');
-                    return U.filter(s => s.no.toString() === text || s.spell.includes(q) || s.source.toLowerCase().includes(q));
+
+                    // 處理數字搜尋 (支援 1, 01, #01)
+                    const cleanNum = q.replace('#', '');
+                    if (/^\d+$/.test(cleanNum)) {
+                        const targetNo = parseInt(cleanNum);
+                        return U.filter(s => s.no === targetNo);
+                    }
+
+                    // 處理文字搜尋
+                    return U.filter(s => 
+                        s.spell.toLowerCase().includes(q) || 
+                        s.source.toLowerCase().includes(q)
+                    );
                 });
 
                 const goToSkill = async (skillStr) => {
                     const match = skillStr.match(/#(\d+)/);
                     if (match) {
-                        skillSearch.value = `#${match[1]}`;
+                        skillSearch.value = `#${match[1].padStart(2, '0')}`;
                         await nextTick();
-                        window.scrollTo({ top: document.getElementById('search-section').offsetTop - 20, behavior: 'smooth' });
+                        window.scrollTo({ 
+                            top: document.getElementById('search-section').offsetTop - 20, 
+                            behavior: 'smooth' 
+                        });
                     }
                 };
 
