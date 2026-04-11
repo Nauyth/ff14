@@ -35,6 +35,7 @@
             min-height: 2.8rem;
         }
         .list-item:hover { background-color: #334155; transform: translateX(4px); }
+        .copyright-text { letter-spacing: 0.02em; }
     </style>
 </head>
 <body class="min-h-screen font-sans">
@@ -94,10 +95,17 @@
             </div>
         </div>
 
-        <footer class="mt-12 pb-8 text-center border-t border-slate-800 pt-8 px-4">
-            <p class="text-[10px] text-slate-600 leading-relaxed uppercase tracking-tighter">
-                FINAL FANTASY XIV © SQUARE ENIX | Made by Nauyth
-            </p>
+        <footer class="mt-20 pb-8 text-center border-t border-slate-800 pt-8 px-4">
+            <div class="max-w-2xl mx-auto space-y-4">
+                <p class="text-[12px] text-slate-500 leading-relaxed copyright-text">
+                    FINAL FANTASY XIV © 2010 - 2026 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
+                    本站提供的所有遊戲數據、圖像及相關資訊之版權均屬於 SQUARE ENIX 所有。<br>
+                    本站為玩家自製工具，僅供數據參考與交流使用，與官方無關。
+                </p>
+                <p class="text-[14px] text-slate-400 font-bold tracking-wide">
+                    © 本站非官方網站，與 Square Enix 無關 | Made by Nauyth
+                </p>
+            </div>
         </footer>
     </div>
 
@@ -120,44 +128,4 @@
                 const activeChallenges = computed(() => {
                     return weeklyData.map(d => {
                         let tagClass = d.level === "初級" ? "bg-emerald-900/40 text-emerald-400 border-emerald-500/20" : 
-                                       d.level === "中級" ? "bg-sky-900/40 text-sky-400 border-sky-500/20" : 
-                                       "bg-purple-900/40 text-purple-400 border-purple-500/20";
-                        const skillNames = d.skills.map(code => {
-                            const noMatch = code.match(/#(\d+)/);
-                            if (noMatch) {
-                                const no = parseInt(noMatch[1]);
-                                const found = U.find(s => s.no === no);
-                                return found ? `#${no.toString().padStart(2, '0')} ${found.spell}` : code;
-                            }
-                            return code;
-                        });
-                        return { ...d, stageName: stages[d.stageId] || "未知", tagClass, recommendedSkills: skillNames };
-                    });
-                });
-
-                const filteredSkills = computed(() => {
-                    let q = skillSearch.value.toLowerCase().trim();
-                    if (!q) return U;
-                    const cleanNum = q.replace('#', '');
-                    if (/^\d+$/.test(cleanNum)) {
-                        const targetNo = parseInt(cleanNum);
-                        return U.filter(s => s.no === targetNo);
-                    }
-                    return U.filter(s => s.spell.toLowerCase().includes(q) || s.source.toLowerCase().includes(q));
-                });
-
-                const goToSkill = async (skillStr) => {
-                    const match = skillStr.match(/#(\d+)/);
-                    if (match) {
-                        skillSearch.value = `#${match[1].padStart(2, '0')}`;
-                        await nextTick();
-                        window.scrollTo({ top: document.getElementById('search-section').offsetTop - 20, behavior: 'smooth' });
-                    }
-                };
-
-                return { weeklyDateRange, skillSearch, filteredSkills, goToSkill, activeChallenges, achievementDocs };
-            }
-        }).mount('#app');
-    </script>
-</body>
-</html>
+                                       d.level === "中級" ? "bg-sky-900/40 text-sky-400 border-sky-50
