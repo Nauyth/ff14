@@ -26,10 +26,14 @@
         .search-input { background-color: #020617; border: 2px solid #334155; color: #ffffff; }
         .list-item { background-color: #1e293b; border: 1px solid #334155; transition: 0.2s; }
         .list-item:hover { background-color: #334155; transform: translateX(4px); }
+        
+        /* 頁尾樣式優化 */
+        footer { border-top: 1px solid #1e293b; }
+        .copyright-text { letter-spacing: 0.02em; }
     </style>
 </head>
 <body class="min-h-screen font-sans">
-    <div id="app" v-cloak class="max-w-2xl mx-auto p-4 pb-24">
+    <div id="app" v-cloak class="max-w-2xl mx-auto p-4 pb-12">
         
         <header class="py-12 text-center">
             <h1 class="text-4xl tracking-widest text-white font-black uppercase">青魔導士每週情報站</h1>
@@ -69,7 +73,7 @@
             <input v-model="skillSearch" type="text" placeholder="輸入名稱或編號 (如: #124)" class="search-input w-full rounded-xl px-6 py-4 shadow-2xl text-lg font-bold">
         </div>
 
-        <div class="space-y-2">
+        <div class="space-y-2 mb-16">
             <div v-for="skill in filteredSkills" :key="skill.no" class="list-item p-3 px-5 rounded-lg flex items-center justify-between group">
                 <div class="flex items-center gap-4 min-w-0">
                     <span class="font-mono text-lg text-slate-500 font-bold w-8 shrink-0">{{ skill.no.toString().padStart(2, '0') }}</span>
@@ -79,6 +83,19 @@
                 <div class="text-[10px] font-mono text-slate-600 font-bold bg-black/20 px-2 py-0.5 rounded shrink-0 ml-4">P{{ skill.patch }}</div>
             </div>
         </div>
+
+        <footer class="mt-20 pb-8 text-center border-t border-slate-800 pt-8 px-4">
+            <div class="max-w-2xl mx-auto space-y-4">
+                <p class="text-[12px] text-slate-500 leading-relaxed copyright-text">
+                    FINAL FANTASY XIV © 2010 - 2026 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
+                    本站提供的所有遊戲數據、圖像及相關資訊之版權均屬於 SQUARE ENIX 所有。<br>
+                    本站為玩家自製工具，僅供數據參考與交流使用，與官方無關。
+                </p>
+                <p class="text-[14px] text-slate-400 font-bold tracking-wide">
+                    © 本站非官方網站，僅個人創作 Made by Nauyth
+                </p>
+            </div>
+        </footer>
     </div>
 
     <script>
@@ -110,7 +127,7 @@
                 ];
 
                 // ==========================================
-                // 程式邏輯區 (除非要改功能，否則不需變動)
+                // 程式邏輯區
                 // ==========================================
                 const skillSearch = ref('');
                 const U = SKILLS_LIBRARY;
