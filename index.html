@@ -74,17 +74,17 @@
             <input v-model="skillSearch" type="text" placeholder="輸入名稱或編號 (如: #01)" class="search-input w-full rounded-xl px-6 py-4 shadow-2xl text-lg font-bold">
         </div>
 
-        <div class="space-y-2 mb-16">
-            <div v-for="skill in filteredSkills" :key="skill.no" class="list-item p-4 px-5 rounded-lg flex items-center justify-between group">
-                <div class="flex items-center gap-4 min-w-0 flex-1">
-                    <span class="font-mono text-lg text-slate-500 font-bold w-10 shrink-0">{{ skill.no.toString().padStart(2, '0') }}</span>
-                    <div class="flex flex-col min-w-0">
-                        <span class="text-lg text-white font-black truncate">{{ skill.spell }}</span>
-                        <span class="text-sm text-slate-400 font-medium truncate">{{ skill.source }}</span>
-                    </div>
+        <div class="space-y-1.5 mb-16">
+            <div v-for="skill in filteredSkills" :key="skill.no" class="list-item p-3 px-5 rounded-lg flex items-center group">
+                <span class="font-mono text-base text-slate-500 font-bold w-10 shrink-0">{{ skill.no.toString().padStart(2, '0') }}</span>
+                
+                <div class="flex items-baseline gap-3 min-w-0 flex-1">
+                    <span class="text-base text-white font-black shrink-0">{{ skill.spell }}</span>
+                    <span class="text-xs text-slate-400 font-medium truncate opacity-80">{{ skill.source }}</span>
                 </div>
-                <div class="ml-4 shrink-0">
-                    <span class="text-xs font-mono text-slate-400 font-bold bg-slate-800/50 border border-slate-700 px-3 py-1 rounded-full uppercase tracking-tighter">
+
+                <div class="ml-auto pl-4 shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 font-bold border border-slate-700/50 px-2 py-0.5 rounded uppercase tracking-tighter bg-slate-800/30">
                         P{{ skill.patch }}
                     </span>
                 </div>
@@ -113,9 +113,6 @@
         const { createApp, ref, computed, nextTick } = Vue;
         createApp({
             setup() {
-                // ==========================================
-                // 管理員更新區塊
-                // ==========================================
                 const weeklyDateRange = "2026/04/07 — 2026/04/14";
 
                 const weeklyData = [
@@ -135,13 +132,10 @@
                         level: "上級", 
                         stageId: "18", 
                         achievements: ["標準通關", "高階法師"], 
-                        skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈"] 
+                        skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈", "#102 如意大旋風", "#103 鬼宿腳"] 
                     }
                 ];
 
-                // ==========================================
-                // 程式邏輯區
-                // ==========================================
                 const skillSearch = ref('');
                 const U = SKILLS_LIBRARY;
                 const stages = STAGES_DATA;
@@ -163,25 +157,18 @@
                             return code;
                         });
 
-                        return { 
-                            ...d, 
-                            stageName: stages[d.stageId] || "未知", 
-                            tagClass, 
-                            recommendedSkills: skillNames 
-                        };
+                        return { ...d, stageName: stages[d.stageId] || "未知", tagClass, recommendedSkills: skillNames };
                     });
                 });
 
                 const filteredSkills = computed(() => {
                     let q = skillSearch.value.toLowerCase().trim();
                     if (!q) return U;
-
                     const cleanNum = q.replace('#', '');
                     if (/^\d+$/.test(cleanNum)) {
                         const targetNo = parseInt(cleanNum);
                         return U.filter(s => s.no === targetNo);
                     }
-
                     return U.filter(s => 
                         s.spell.toLowerCase().includes(q) || 
                         s.source.toLowerCase().includes(q)
