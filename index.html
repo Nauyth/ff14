@@ -25,15 +25,14 @@
         .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
         .search-input { background-color: #020617; border: 2px solid #334155; color: #ffffff; }
         
-        /* 列表項優化：移除版本號後的緊湊單行佈局 */
         .list-item { 
             background-color: #1e293b; 
             border: 1px solid #334155; 
             transition: 0.2s; 
             display: flex; 
             align-items: center;
-            padding: 0.4rem 1.25rem;
-            min-height: 2.5rem;
+            padding: 0.5rem 1.25rem;
+            min-height: 2.8rem;
         }
         .list-item:hover { background-color: #334155; transform: translateX(4px); }
     </style>
@@ -56,7 +55,7 @@
             
             <div v-for="c in activeChallenges" :key="c.level" class="challenge-card p-5 shadow-lg">
                 <div class="flex justify-between items-center mb-4">
-                    <span :class="c.tagClass" class="px-2 py-0.5 text-xs rounded border font-black">{{ c.level }}</span>
+                    <span :class="c.tagClass" class="px-3 py-1 text-lg rounded border font-black">{{ c.level }}</span>
                     <div class="text-right">
                         <div class="text-white text-lg font-black">{{ c.stageName }}</div>
                         <div class="text-slate-500 font-mono text-xs uppercase">Stage {{ c.stageId }}</div>
@@ -86,7 +85,7 @@
                 
                 <div class="flex flex-1 items-baseline gap-3 min-w-0 overflow-hidden">
                     <span class="text-white font-black text-base shrink-0">{{ skill.spell }}</span>
-                    <span class="text-xs text-slate-400 font-medium truncate opacity-60">— {{ skill.source }}</span>
+                    <span class="text-sm text-slate-400 font-medium truncate opacity-80">— {{ skill.source }}</span>
                 </div>
             </div>
             
@@ -106,9 +105,6 @@
         const { createApp, ref, computed, nextTick } = Vue;
         createApp({
             setup() {
-                // ==========================================
-                // 管理員更新區塊
-                // ==========================================
                 const weeklyDateRange = "2026/04/07 — 2026/04/14";
                 const weeklyData = [
                     { level: "初級", stageId: "07", achievements: ["標準通關"], skills: ["#31 滑舌", "#25 鼻息", "#63 音爆"] },
@@ -116,9 +112,6 @@
                     { level: "上級", stageId: "18", achievements: ["標準通關", "高階法師"], skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈", "#102 如意大旋風", "#103 鬼宿腳"] }
                 ];
 
-                // ==========================================
-                // 邏輯處理 (支援 01-09 修復)
-                // ==========================================
                 const skillSearch = ref('');
                 const U = SKILLS_LIBRARY;
                 const stages = STAGES_DATA;
