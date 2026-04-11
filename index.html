@@ -9,7 +9,7 @@
     <script src="data.js"></script>
     <style>
         [v-cloak] { display: none; }
-        html { font-size: 20px; scroll-behavior: smooth; }
+        html { font-size: 18px; scroll-behavior: smooth; }
         body { line-height: 1.6; background-color: #0f172a; color: #d1d5db; }
         .challenge-card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
         .skill-tag { cursor: pointer; transition: 0.2s; background-color: #334155; border: 1px solid #475569; color: #f1f5f9; }
@@ -19,93 +19,86 @@
             visibility: hidden; width: 280px; background-color: #334155; color: #f1f5f9;
             text-align: center; border-radius: 6px; padding: 10px; position: absolute;
             z-index: 50; bottom: 125%; left: 50%; margin-left: -140px; opacity: 0;
-            transition: 0.3s; border: 1px solid #475569; font-size: 18px;
+            transition: 0.3s; border: 1px solid #475569; font-size: 16px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
         .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
         .search-input { background-color: #020617; border: 2px solid #334155; color: #ffffff; }
-        .list-item { background-color: #1e293b; border: 1px solid #334155; transition: 0.2s; }
+        
+        /* 列表項優化：移除版本號後的緊湊單行佈局 */
+        .list-item { 
+            background-color: #1e293b; 
+            border: 1px solid #334155; 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center;
+            padding: 0.4rem 1.25rem;
+            min-height: 2.5rem;
+        }
         .list-item:hover { background-color: #334155; transform: translateX(4px); }
-        footer { border-top: 1px solid #1e293b; }
-        .copyright-text { letter-spacing: 0.02em; }
     </style>
 </head>
 <body class="min-h-screen font-sans">
     <div id="app" v-cloak class="max-w-2xl mx-auto p-4 pb-12">
         
-        <header class="py-12 text-center">
-            <h1 class="text-4xl tracking-widest text-white font-black uppercase">青魔導士每週情報站</h1>
-            <p class="text-slate-500 mt-2 font-mono text-sm tracking-widest uppercase">Weekly Challenge & Database</p>
-            <div class="mt-6 inline-block px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-sm font-bold tracking-widest">
+        <header class="py-10 text-center">
+            <h1 class="text-3xl tracking-widest text-white font-black uppercase">青魔導士每週情報站</h1>
+            <p class="text-slate-500 mt-2 font-mono text-xs tracking-widest uppercase">Weekly Challenge & Database</p>
+            <div class="mt-6 inline-block px-4 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold tracking-widest">
                 活動期間：{{ weeklyDateRange }}
             </div>
         </header>
 
-        <section class="mb-12 space-y-6">
-            <h2 class="text-xl flex items-center gap-2 text-slate-400 font-black tracking-widest uppercase">
-                <span class="w-1.5 h-6 bg-blue-500"></span> 本週假面狂歡挑戰
+        <section class="mb-10 space-y-4">
+            <h2 class="text-lg flex items-center gap-2 text-slate-400 font-black tracking-widest uppercase">
+                <span class="w-1 h-5 bg-blue-500"></span> 本週挑戰
             </h2>
             
-            <div v-for="c in activeChallenges" :key="c.level" class="challenge-card p-6 shadow-xl">
-                <div class="flex justify-between items-start mb-4">
-                    <span :class="c.tagClass" class="px-3 py-1 text-sm rounded border font-black">{{ c.level }}</span>
+            <div v-for="c in activeChallenges" :key="c.level" class="challenge-card p-5 shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <span :class="c.tagClass" class="px-2 py-0.5 text-xs rounded border font-black">{{ c.level }}</span>
                     <div class="text-right">
-                        <div class="text-white text-xl font-black mb-1">{{ c.stageName }}</div>
-                        <div class="text-slate-500 font-mono text-sm uppercase">Stage {{ c.stageId }}</div>
+                        <div class="text-white text-lg font-black">{{ c.stageName }}</div>
+                        <div class="text-slate-500 font-mono text-xs uppercase">Stage {{ c.stageId }}</div>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-2 mb-5">
+                <div class="flex flex-wrap gap-2 mb-4">
                     <div v-for="achName in c.achievements" class="tooltip-container">
-                        <div class="text-[13px] text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/20 font-bold">🏆 {{ achName }}</div>
+                        <div class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 font-bold">🏆 {{ achName }}</div>
                         <span class="tooltip-text font-bold">{{ achievementDocs[achName] || '暫無說明' }}</span>
                     </div>
                 </div>
 
-                <div class="text-xs text-slate-500 mb-2 font-black uppercase tracking-widest">推薦使用技能</div>
-                <div class="flex flex-wrap gap-2">
-                    <span v-for="s in c.recommendedSkills" @click="goToSkill(s)" class="skill-tag px-4 py-2 rounded text-sm font-bold">{{ s }}</span>
+                <div class="flex flex-wrap gap-1.5">
+                    <span v-for="s in c.recommendedSkills" @click="goToSkill(s)" class="skill-tag px-3 py-1 rounded text-xs font-bold">{{ s }}</span>
                 </div>
             </div>
         </section>
 
-        <div id="search-section" class="sticky top-4 z-20 mb-8">
-            <h2 class="text-sm font-black text-slate-500 mb-2 px-1 tracking-widest uppercase">技能資料庫搜尋</h2>
-            <input v-model="skillSearch" type="text" placeholder="輸入名稱或編號 (如: #01)" class="search-input w-full rounded-xl px-6 py-4 shadow-2xl text-lg font-bold">
+        <div id="search-section" class="sticky top-4 z-20 mb-6">
+            <input v-model="skillSearch" type="text" placeholder="搜尋技能名稱、來源或編號 (如: #01)" class="search-input w-full rounded-xl px-5 py-3 shadow-2xl text-base font-bold">
         </div>
 
-        <div class="space-y-1.5 mb-16">
-            <div v-for="skill in filteredSkills" :key="skill.no" class="list-item p-3 px-5 rounded-lg flex items-center group">
-                <span class="font-mono text-base text-slate-500 font-bold w-10 shrink-0">{{ skill.no.toString().padStart(2, '0') }}</span>
+        <div class="space-y-1 mb-16">
+            <div v-for="skill in filteredSkills" :key="skill.no" class="list-item rounded-lg">
+                <span class="font-mono text-sm text-slate-500 font-bold w-10 shrink-0">{{ skill.no.toString().padStart(2, '0') }}</span>
                 
-                <div class="flex items-baseline gap-3 min-w-0 flex-1">
-                    <span class="text-base text-white font-black shrink-0">{{ skill.spell }}</span>
-                    <span class="text-xs text-slate-400 font-medium truncate opacity-80">{{ skill.source }}</span>
-                </div>
-
-                <div class="ml-auto pl-4 shrink-0">
-                    <span class="text-[10px] font-mono text-slate-400 font-bold border border-slate-700/50 px-2 py-0.5 rounded uppercase tracking-tighter bg-slate-800/30">
-                        P{{ skill.patch }}
-                    </span>
+                <div class="flex flex-1 items-baseline gap-3 min-w-0 overflow-hidden">
+                    <span class="text-white font-black text-base shrink-0">{{ skill.spell }}</span>
+                    <span class="text-xs text-slate-400 font-medium truncate opacity-60">— {{ skill.source }}</span>
                 </div>
             </div>
             
-            <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-500">
+            <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-500 text-sm">
                 找不到相關技能
             </div>
         </div>
 
-        <footer class="mt-20 pb-8 text-center border-t border-slate-800 pt-8 px-4">
-            <div class="max-w-2xl mx-auto space-y-4">
-                <p class="text-[12px] text-slate-500 leading-relaxed copyright-text">
-                    FINAL FANTASY XIV © 2010 - 2026 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
-                    本站提供的所有遊戲數據、圖像及相關資訊之版權均屬於 SQUARE ENIX 所有。<br>
-                    本站為玩家自製工具，僅供數據參考與交流使用，與官方無關。
-                </p>
-                <p class="text-[14px] text-slate-400 font-bold tracking-wide">
-                    © 本站非官方網站，與 Square Enix 無關 | Made by Nauyth
-                </p>
-            </div>
+        <footer class="mt-12 pb-8 text-center border-t border-slate-800 pt-8 px-4">
+            <p class="text-[10px] text-slate-600 leading-relaxed uppercase tracking-tighter">
+                FINAL FANTASY XIV © SQUARE ENIX | Made by Nauyth
+            </p>
         </footer>
     </div>
 
@@ -113,29 +106,19 @@
         const { createApp, ref, computed, nextTick } = Vue;
         createApp({
             setup() {
+                // ==========================================
+                // 管理員更新區塊
+                // ==========================================
                 const weeklyDateRange = "2026/04/07 — 2026/04/14";
-
                 const weeklyData = [
-                    { 
-                        level: "初級", 
-                        stageId: "07", 
-                        achievements: ["標準通關"], 
-                        skills: ["#31 滑舌", "#25 鼻息", "#63 音爆"] 
-                    },
-                    { 
-                        level: "中級", 
-                        stageId: "03", 
-                        achievements: ["水系大師"], 
-                        skills: ["#01 水砲", "#09 苦悶之歌", "#109 魔力吐息", "#24 投擲沙丁魚"] 
-                    },
-                    { 
-                        level: "上級", 
-                        stageId: "18", 
-                        achievements: ["標準通關", "高階法師"], 
-                        skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈", "#102 如意大旋風", "#103 鬼宿腳"] 
-                    }
+                    { level: "初級", stageId: "07", achievements: ["標準通關"], skills: ["#31 滑舌", "#25 鼻息", "#63 音爆"] },
+                    { level: "中級", stageId: "03", achievements: ["水系大師"], skills: ["#01 水砲", "#09 苦悶之歌", "#109 魔力吐息", "#24 投擲沙丁魚"] },
+                    { level: "上級", stageId: "18", achievements: ["標準通關", "高階法師"], skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈", "#102 如意大旋風", "#103 鬼宿腳"] }
                 ];
 
+                // ==========================================
+                // 邏輯處理 (支援 01-09 修復)
+                // ==========================================
                 const skillSearch = ref('');
                 const U = SKILLS_LIBRARY;
                 const stages = STAGES_DATA;
@@ -146,7 +129,6 @@
                         let tagClass = d.level === "初級" ? "bg-emerald-900/40 text-emerald-400 border-emerald-500/20" : 
                                        d.level === "中級" ? "bg-sky-900/40 text-sky-400 border-sky-500/20" : 
                                        "bg-purple-900/40 text-purple-400 border-purple-500/20";
-                        
                         const skillNames = d.skills.map(code => {
                             const noMatch = code.match(/#(\d+)/);
                             if (noMatch) {
@@ -156,7 +138,6 @@
                             }
                             return code;
                         });
-
                         return { ...d, stageName: stages[d.stageId] || "未知", tagClass, recommendedSkills: skillNames };
                     });
                 });
@@ -169,10 +150,7 @@
                         const targetNo = parseInt(cleanNum);
                         return U.filter(s => s.no === targetNo);
                     }
-                    return U.filter(s => 
-                        s.spell.toLowerCase().includes(q) || 
-                        s.source.toLowerCase().includes(q)
-                    );
+                    return U.filter(s => s.spell.toLowerCase().includes(q) || s.source.toLowerCase().includes(q));
                 });
 
                 const goToSkill = async (skillStr) => {
@@ -180,10 +158,7 @@
                     if (match) {
                         skillSearch.value = `#${match[1].padStart(2, '0')}`;
                         await nextTick();
-                        window.scrollTo({ 
-                            top: document.getElementById('search-section').offsetTop - 20, 
-                            behavior: 'smooth' 
-                        });
+                        window.scrollTo({ top: document.getElementById('search-section').offsetTop - 20, behavior: 'smooth' });
                     }
                 };
 
