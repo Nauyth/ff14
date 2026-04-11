@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="data.js"></script>
+    
     <style>
         [v-cloak] { display: none; }
         html { font-size: 18px; scroll-behavior: smooth; }
@@ -103,7 +104,7 @@
                     本站為玩家自製工具，僅供數據參考與交流使用，與官方無關。
                 </p>
                 <p class="text-[14px] text-slate-400 font-bold tracking-wide">
-                    © 本站非官方網站，僅個人創作 Made by Nauyth
+                    © 本站非官方網站，與 Square Enix 無關 | Made by Nauyth
                 </p>
             </div>
         </footer>
@@ -113,19 +114,62 @@
         const { createApp, ref, computed, nextTick } = Vue;
         createApp({
             setup() {
+                // 確保數據存在，防止報錯
+                const lib = typeof SKILLS_LIBRARY !== 'undefined' ? SKILLS_LIBRARY : [];
+                const stages = typeof STAGES_DATA !== 'undefined' ? STAGES_DATA : {};
+                const achDocs = typeof ACHIEVEMENT_DOCS !== 'undefined' ? ACHIEVEMENT_DOCS : {};
+
                 const weeklyDateRange = "2026/04/07 — 2026/04/14";
                 const weeklyData = [
-                    { level: "初級", stageId: "07", achievements:, skills: ["#31 滑舌", "#25 鼻息", "#63 音爆"] },
+                    { level: "初級", stageId: "07", achievements: ["標準通關"], skills: ["#31 滑舌", "#25 鼻息", "#63 音爆"] },
                     { level: "中級", stageId: "03", achievements: ["水系大師"], skills: ["#01 水砲", "#09 苦悶之歌", "#109 魔力吐息", "#24 投擲沙丁魚"] },
-                    { level: "上級", stageId: "18", achievements: ["高準通關", "高階法師"], skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈"] }
+                    { level: "上級", stageId: "18", achievements: ["標準通關", "高階法師"], skills: ["#63 音爆", "#124 終有一死", "#113 紅寶石電圈", "#102 如意大旋風", "#103 鬼宿腳"] }
                 ];
 
                 const skillSearch = ref('');
-                const U = SKILLS_LIBRARY;
-                const stages = STAGES_DATA;
-                const achievementDocs = ACHIEVEMENT_DOCS;
 
                 const activeChallenges = computed(() => {
                     return weeklyData.map(d => {
                         let tagClass = d.level === "初級" ? "bg-emerald-900/40 text-emerald-400 border-emerald-500/20" : 
-                                       d.level === "中級" ? "bg-sky-900/40 text-sky-400 border-sky-50
+                                       d.level === "中級" ? "bg-sky-900/40 text-sky-400 border-sky-500/20" : 
+                                       "bg-purple-900/40 text-purple-400 border-purple-500/20";
+                        const skillNames = d.skills.map(code => {
+                            const noMatch = code.match(/#(\d+)/);
+                            if (noMatch) {
+                                const no = parseInt(noMatch[1]);
+                                const found = lib.find(s => s.no === no);
+                                return found ? `#${no.toString().padStart(2, '0')} ${found.spell}` : code;
+                            }
+                            return code;
+                        });
+                        return { ...d, stageName: stages[d.stageId] || "未知", tagClass, recommendedSkills: skillNames };
+                    });
+                });
+
+                const filteredSkills = computed(() => {
+                    let q = skillSearch.value.toLowerCase().trim();
+                    if (!q) return lib;
+                    const cleanNum = q.replace('#', '');
+                    if (/^\d+$/.test(cleanNum)) {
+                        const targetNo = parseInt(cleanNum);
+                        return lib.filter(s => s.no === targetNo);
+                    }
+                    return lib.filter(s => s.spell.toLowerCase().includes(q) || s.source.toLowerCase().includes(q));
+                });
+
+                const goToSkill = async (skillStr) => {
+                    const match = skillStr.match(/#(\d+)/);
+                    if (match) {
+                        skillSearch.value = `#${match[1].padStart(2, '0')}`;
+                        await nextTick();
+                        const el = document.getElementById('search-section');
+                        if (el) window.scrollTo({ top: el.offsetTop - 20, behavior: 'smooth' });
+                    }
+                };
+
+                return { weeklyDateRange, skillSearch, filteredSkills, goToSkill, activeChallenges, achievementDocs: achDocs };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
