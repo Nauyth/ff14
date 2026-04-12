@@ -14,14 +14,23 @@
         html { font-size: 18px; }
         body { line-height: 1.6; background-color: #0f172a; color: #d1d5db; }
 
+        /* ── 整體：左右並排，各自從頂到底 ── */
         #app {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* 頂部標題列 */
+        /* ── 左側主區域：含標題、分頁、內容、頁尾 ── */
+        .left-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-width: 0;
+        }
+
         .top-bar {
             flex-shrink: 0;
             background-color: #0f172a;
@@ -30,7 +39,6 @@
             text-align: center;
         }
 
-        /* 分頁 tab — 置中 */
         .tab-bar {
             flex-shrink: 0;
             display: flex;
@@ -53,14 +61,6 @@
         .tab:hover { color: #94a3b8; }
         .tab.active { color: #60a5fa; border-bottom-color: #3b82f6; }
 
-        /* 主體：左右分割 */
-        .main-layout {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-        /* 左側 */
         .left-panel {
             flex: 1;
             overflow-y: auto;
@@ -68,8 +68,15 @@
             min-width: 0;
         }
 
-        /* 右側：技能索引 */
-        .right-panel {
+        .footer-bar {
+            flex-shrink: 0;
+            border-top: 1px solid #1e293b;
+            padding: 0.6rem 1.5rem;
+            text-align: center;
+        }
+
+        /* ── 右側：技能索引，從頂到底 ── */
+        .right-col {
             width: 320px;
             flex-shrink: 0;
             display: flex;
@@ -102,7 +109,7 @@
         .skill-tag { cursor: pointer; transition: 0.2s; background-color: #334155; border: 1px solid #475569; color: #f1f5f9; }
         .skill-tag:hover { background-color: #475569; border-color: #94a3b8; }
 
-        /* 假面狂歡關卡卡片 */
+        /* 假面狂歡卡片 */
         .masq-card {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -114,20 +121,8 @@
             gap: 0.75rem;
         }
         .masq-card:hover { background-color: #263348; border-color: #475569; }
-        .masq-no {
-            font-family: monospace;
-            font-size: 13px;
-            font-weight: 700;
-            color: #64748b;
-            width: 2rem;
-            flex-shrink: 0;
-        }
-        .masq-name {
-            color: #f1f5f9;
-            font-weight: 700;
-            font-size: 14px;
-            flex: 1;
-        }
+        .masq-no { font-family: monospace; font-size: 13px; font-weight: 700; color: #64748b; width: 2rem; flex-shrink: 0; }
+        .masq-name { color: #f1f5f9; font-weight: 700; font-size: 14px; flex: 1; }
 
         /* 搜尋框 */
         .search-input { background-color: #020617; border: 2px solid #1e293b; color: #ffffff; width: 100%; font-size: 13px; }
@@ -147,57 +142,43 @@
         }
         .skill-item:hover { background-color: #1e293b; }
 
-        /* patch badge */
         .patch-badge {
-            font-size: 10px;
-            padding: 1px 5px;
-            border-radius: 4px;
-            background-color: #1e3a5f;
-            border: 1px solid #2563eb44;
-            color: #60a5fa;
-            font-family: monospace;
-            white-space: nowrap;
-        }
-
-        /* 頁尾 */
-        .footer-bar {
-            flex-shrink: 0;
-            border-top: 1px solid #1e293b;
-            padding: 0.6rem 1.5rem;
-            text-align: center;
+            font-size: 10px; padding: 1px 5px; border-radius: 4px;
+            background-color: #1e3a5f; border: 1px solid #2563eb44;
+            color: #60a5fa; font-family: monospace; white-space: nowrap;
         }
 
         /* RWD */
         @media (max-width: 768px) {
-            #app { height: auto; overflow: visible; }
-            .main-layout { flex-direction: column; overflow: visible; }
+            #app { flex-direction: column; height: auto; overflow: visible; }
+            .left-col { overflow: visible; }
             .left-panel { overflow: visible; padding: 1rem; }
-            .right-panel { width: 100%; border-left: none; border-top: 1px solid #1e293b; height: 60vh; }
+            .right-col { width: 100%; border-left: none; border-top: 1px solid #1e293b; height: 60vh; }
         }
     </style>
 </head>
 <body>
 <div id="app" v-cloak>
 
-    <!-- 標題 -->
-    <header class="top-bar">
-        <h1 class="text-xl tracking-widest text-white font-black uppercase leading-tight">青魔導士每週情報</h1>
-        <p class="text-slate-500 font-mono text-[11px] tracking-widest uppercase">Weekly Challenge & Database</p>
-    </header>
+    <!-- ── 左側主區域 ── -->
+    <div class="left-col">
 
-    <!-- 分頁（置中） -->
-    <nav class="tab-bar">
-        <div class="tab" :class="{ active: currentTab === 'weekly' }" @click="currentTab = 'weekly'">本週挑戰</div>
-        <div class="tab" :class="{ active: currentTab === 'masquerade' }" @click="currentTab = 'masquerade'">假面狂歡</div>
-    </nav>
+        <!-- 標題 -->
+        <header class="top-bar">
+            <h1 class="text-xl tracking-widest text-white font-black uppercase leading-tight">青魔導士每週情報</h1>
+            <p class="text-slate-500 font-mono text-[11px] tracking-widest uppercase">Weekly Challenge & Database</p>
+        </header>
 
-    <!-- 主體 -->
-    <div class="main-layout">
+        <!-- 分頁（置中） -->
+        <nav class="tab-bar">
+            <div class="tab" :class="{ active: currentTab === 'weekly' }" @click="currentTab = 'weekly'">本週挑戰</div>
+            <div class="tab" :class="{ active: currentTab === 'masquerade' }" @click="currentTab = 'masquerade'">假面狂歡</div>
+        </nav>
 
-        <!-- 左側 -->
+        <!-- 主內容 -->
         <main class="left-panel">
 
-            <!-- ── 本週挑戰 ── -->
+            <!-- 本週挑戰 -->
             <div v-if="currentTab === 'weekly'" class="space-y-4 max-w-xl mx-auto">
                 <div class="text-center mb-5">
                     <h2 class="text-base font-black tracking-widest uppercase text-slate-400 flex items-center justify-center gap-2">
@@ -236,7 +217,7 @@
                 </div>
             </div>
 
-            <!-- ── 假面狂歡 ── -->
+            <!-- 假面狂歡 -->
             <div v-if="currentTab === 'masquerade'" class="max-w-xl mx-auto">
                 <div class="text-center mb-5">
                     <h2 class="text-base font-black tracking-widest uppercase text-slate-400 flex items-center justify-center gap-2">
@@ -254,43 +235,54 @@
 
         </main>
 
-        <!-- 右側：技能索引 -->
-        <aside class="right-panel">
-            <div class="right-panel-header">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="text-xs font-black tracking-widest uppercase text-slate-400">技能索引</span>
-                    <span class="text-xs text-slate-600 font-mono">{{ filteredSkills.length }} / {{ totalSkills }}</span>
-                </div>
-                <input
-                    v-model="skillSearch"
-                    type="text"
-                    placeholder="搜尋名稱、來源或 #編號"
-                    class="search-input rounded-lg px-3 py-2 font-bold"
-                >
-            </div>
-            <div class="right-panel-list" ref="skillListEl">
-                <div
-                    v-for="skill in filteredSkills"
-                    :key="skill.no"
-                    class="skill-item"
-                    :data-no="skill.no"
-                    @mouseenter="showTooltip($event, skill.source)"
-                    @mouseleave="hideTooltip"
-                >
-                    <span class="font-mono text-xs text-slate-600 font-bold">{{ String(skill.no).padStart(2, '0') }}</span>
-                    <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
-                    <div class="flex items-center gap-1.5 justify-end">
-                        <span class="patch-badge">{{ skill.patch }}</span>
-                        <span class="text-slate-500 text-xs cursor-help select-none">ⓘ</span>
-                    </div>
-                </div>
-                <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
-                    找不到相關技能
-                </div>
-            </div>
-        </aside>
+        <!-- 頁尾 -->
+        <footer class="footer-bar">
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+                FINAL FANTASY XIV © 2010 - 2026 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
+                本站提供的所有遊戲數據、圖像及相關資訊之版權均屬於 SQUARE ENIX 所有。
+            </p>
+            <p class="text-[12px] text-slate-400 font-bold tracking-wide mt-1">
+                © 本站非官方網站，為玩家自製工具僅供數據參考與交流使用。Made by Nauyth
+            </p>
+        </footer>
 
     </div>
+
+    <!-- ── 右側：技能索引，從頂到底 ── -->
+    <aside class="right-col">
+        <div class="right-panel-header">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest uppercase text-slate-400">技能索引</span>
+                <span class="text-xs text-slate-600 font-mono">{{ filteredSkills.length }} / {{ totalSkills }}</span>
+            </div>
+            <input
+                v-model="skillSearch"
+                type="text"
+                placeholder="搜尋名稱、來源或 #編號"
+                class="search-input rounded-lg px-3 py-2 font-bold"
+            >
+        </div>
+        <div class="right-panel-list" ref="skillListEl">
+            <div
+                v-for="skill in filteredSkills"
+                :key="skill.no"
+                class="skill-item"
+                :data-no="skill.no"
+                @mouseenter="showTooltip($event, skill.source)"
+                @mouseleave="hideTooltip"
+            >
+                <span class="font-mono text-xs text-slate-600 font-bold">{{ String(skill.no).padStart(2, '0') }}</span>
+                <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
+                <div class="flex items-center gap-1.5 justify-end">
+                    <span class="patch-badge">{{ skill.patch }}</span>
+                    <span class="text-slate-500 text-xs cursor-help select-none">ⓘ</span>
+                </div>
+            </div>
+            <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
+                找不到相關技能
+            </div>
+        </div>
+    </aside>
 
     <!-- 全域 tooltip（來源用） -->
     <div id="global-tooltip" style="
@@ -301,17 +293,6 @@
         max-width:280px; box-shadow:0 8px 20px rgba(0,0,0,0.7);
         pointer-events:none; white-space:normal;
     "></div>
-
-    <!-- 頁尾 -->
-    <footer class="footer-bar">
-        <p class="text-[11px] text-slate-500 leading-relaxed">
-            FINAL FANTASY XIV © 2010 - 2026 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
-            本站提供的所有遊戲數據、圖像及相關資訊之版權均屬於 SQUARE ENIX 所有。
-        </p>
-        <p class="text-[12px] text-slate-400 font-bold tracking-wide mt-1">
-            © 本站非官方網站，為玩家自製工具僅供數據參考與交流使用。Made by Nauyth
-        </p>
-    </footer>
 
 </div>
 
@@ -331,7 +312,7 @@
             const totalSkills = lib.length;
             const currentTab  = ref('weekly');
 
-            // 假面狂歡關卡列表（01~32）
+            // 假面狂歡 01~32
             const masqueradeStages = Object.entries(stages)
                 .filter(([id]) => parseInt(id) >= 1 && parseInt(id) <= 32)
                 .map(([id, name]) => ({ id, name }))
