@@ -144,13 +144,27 @@
         /* 技能列表 */
         .skill-item {
             display: grid;
-            grid-template-columns: 2rem 1fr auto;
+            grid-template-columns: 2rem 2rem 1fr auto;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.35rem 0.5rem;
+            padding: 0.3rem 0.5rem;
             border-radius: 6px;
             transition: 0.15s;
-            min-height: 2.2rem;
+            min-height: 2.4rem;
+        }
+        .skill-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            object-fit: cover;
+            background-color: #1e293b;
+        }
+        .skill-icon-placeholder {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
         }
         .skill-item:hover { background-color: #1e293b; }
 
@@ -284,6 +298,8 @@
                 @mouseleave="hideTooltip"
             >
                 <span class="font-mono text-xs text-slate-600 font-bold">{{ String(skill.no).padStart(2, '0') }}</span>
+                <img v-if="skill.icon" :src="skill.icon" class="skill-icon" :alt="skill.spell" loading="lazy">
+                <div v-else class="skill-icon-placeholder"></div>
                 <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
                 <div class="flex items-center gap-1.5 justify-end">
                     <span class="patch-badge">{{ skill.patch }}</span>
