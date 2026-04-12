@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>青魔導士每週情報站</title>
+    <title>FF14青魔導士情報</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="data.js"></script>
@@ -186,7 +186,7 @@
     <aside class="right-col">
         <div class="right-panel-header">
             <div class="flex items-center gap-2 mb-2">
-                <span class="text-xs font-black tracking-widest uppercase text-slate-400">技能索引</span>
+                <span class="text-sm font-black tracking-widest uppercase text-slate-400">技能索引</span>
             </div>
             <input
                 v-model="skillSearch"
@@ -225,13 +225,13 @@
     <div class="left-col">
 
         <header class="top-bar">
-            <h1 class="text-3xl tracking-widest text-white font-black uppercase leading-tight">青魔導士每週情報</h1>
+            <h1 class="text-3xl tracking-widest text-white font-black uppercase leading-tight">FF14青魔導士情報</h1>
             <p class="text-slate-500 font-mono text-[13px] tracking-widest uppercase mt-1">Weekly Challenge & Database</p>
         </header>
 
         <nav class="tab-bar">
             <div class="tab" :class="{ active: currentTab === 'weekly' }" @click="currentTab = 'weekly'">本週挑戰</div>
-            <div class="tab" :class="{ active: currentTab === 'masquerade' }" @click="currentTab = 'masquerade'">假面狂歡 <span class="text-slate-500 font-normal normal-case tracking-normal">(製作中)</span></div>
+            <div class="tab" :class="{ active: currentTab === 'masquerade' }" @click="currentTab = 'masquerade'">假面狂歡攻略 <span class="text-slate-500 font-normal normal-case tracking-normal">(製作中)</span></div>
         </nav>
 
         <main class="left-panel">
