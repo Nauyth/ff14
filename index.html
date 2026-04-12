@@ -290,38 +290,33 @@
             >
         </div>
         <div class="right-panel-list" ref="skillListEl">
-            <div
-                v-for="skill in filteredSkills"
-                :key="skill.no"
-                class="skill-item"
-                :data-no="skill.no"
-                @mouseenter="showTooltip($event, skill.source)"
-                @mouseleave="hideTooltip"
-            >
-                <span class="font-mono text-xs text-slate-600 font-bold">{{ String(skill.no).padStart(2, '0') }}</span>
-                <img v-if="skill.icon" :src="skill.icon" class="skill-icon" :alt="skill.spell" loading="lazy">
-                <div v-else class="skill-icon-placeholder"></div>
-                <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
-                <div class="flex items-center gap-1.5 justify-end">
-                    <span class="patch-badge">{{ skill.patch }}</span>
-                    <span class="text-slate-500 text-xs cursor-help select-none">ⓘ</span>
+            <template v-for="skill in filteredSkills" :key="skill.no">
+                <div
+                    class="skill-item"
+                    :class="{ expanded: expandedNo === skill.no }"
+                    :data-no="skill.no"
+                    @click="toggleExpand(skill.no)"
+                >
+                    <span class="font-mono text-xs text-slate-600 font-bold">{{ String(skill.no).padStart(2, '0') }}</span>
+                    <img v-if="skill.icon" :src="skill.icon" class="skill-icon" :alt="skill.spell" loading="lazy">
+                    <div v-else class="skill-icon-placeholder"></div>
+                    <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
+                    <div class="flex items-center gap-1.5 justify-end">
+                        <span class="patch-badge">{{ skill.patch }}</span>
+                        <span class="chevron" :class="{ open: expandedNo === skill.no }">▼</span>
+                    </div>
                 </div>
-            </div>
+                <div class="skill-source" :class="{ show: expandedNo === skill.no }">
+                    {{ skill.source }}
+                </div>
+            </template>
             <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
                 找不到相關技能
             </div>
         </div>
     </aside>
 
-    <!-- 全域 tooltip（來源用） -->
-    <div id="global-tooltip" style="
-        display:none; position:fixed; z-index:9999;
-        background-color:#0f172a; color:#cbd5e1;
-        border:1px solid #475569; border-radius:6px;
-        padding:8px 12px; font-size:20px; line-height:1.6;
-        max-width:280px; box-shadow:0 8px 20px rgba(0,0,0,0.7);
-        pointer-events:none; white-space:normal;
-    "></div>
+
 
 </div>
 
@@ -340,32 +335,17 @@
             const skillListEl = ref(null);
             const totalSkills = lib.length;
             const currentTab  = ref('weekly');
+            const expandedNo  = ref(null);
+
+            const toggleExpand = (no) => {
+                expandedNo.value = expandedNo.value === no ? null : no;
+            };
 
             // 假面狂歡 01~32
             const masqueradeStages = Object.entries(stages)
                 .filter(([id]) => parseInt(id) >= 1 && parseInt(id) <= 32)
                 .map(([id, name]) => ({ id, name }))
                 .sort((a, b) => parseInt(a.id) - parseInt(b.id));
-
-            // 全域 tooltip
-            const tooltipEl = () => document.getElementById('global-tooltip');
-            const showTooltip = (event, text) => {
-                const el = tooltipEl();
-                if (!el) return;
-                el.textContent = text;
-                el.style.display = 'block';
-                const rect = event.currentTarget.getBoundingClientRect();
-                let left = rect.left - 288 - 8;
-                if (left < 4) left = rect.right + 8;
-                let top = rect.top + rect.height / 2 - 40;
-                if (top < 4) top = 4;
-                el.style.left = left + 'px';
-                el.style.top  = top + 'px';
-            };
-            const hideTooltip = () => {
-                const el = tooltipEl();
-                if (el) el.style.display = 'none';
-            };
 
             // 挑戰卡片
             const activeChallenges = computed(() =>
@@ -402,9 +382,10 @@
                 );
             });
 
-            // 點擊推薦技能
+            // 點擊推薦技能 → 搜尋、展開、捲動
             const goToSkill = async (no) => {
                 skillSearch.value = '#' + String(no).padStart(2, '0');
+                expandedNo.value = no;
                 await Vue.nextTick();
                 if (skillListEl.value) {
                     const target = skillListEl.value.querySelector('[data-no="' + no + '"]');
@@ -416,7 +397,7 @@
                 weeklyDateRange, skillSearch, skillListEl,
                 totalSkills, currentTab, masqueradeStages,
                 filteredSkills, goToSkill, activeChallenges,
-                achievementDocs: achDocs, showTooltip, hideTooltip
+                achievementDocs: achDocs, expandedNo, toggleExpand
             };
         }
     }).mount('#app');
