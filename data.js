@@ -182,7 +182,7 @@ const SKILLS_LIBRARY = [
     { no: 116, spell: "加強信音", patch: "6.45", source: "格魯格火山(得到寬恕的猥褻)" },
     { no: 117, spell: "力場", patch: "6.45", source: "圖騰：習得120個技能 / 薩菲洛特殲殛戰" },
     { no: 118, spell: "斷罪飛翔", patch: "6.45", source: "無瑕靈君殲滅/殲殛戰" },
-    { no: 119, spell: "雷射眼", patch: "6.45", source: "伊甸 再生4(伊甸之約)" },
+    { no: 119, spell: "激射眼", patch: "6.45", source: "伊甸 再生4(伊甸之約)" },
     { no: 120, spell: "糖果手杖", patch: "6.45", source: "多恩美格禁園(美眼 因克·佐恩)" },
     { no: 121, spell: "必滅之炎", patch: "6.45", source: "宇宙宮(盧格斯)" },
     { no: 122, spell: "咕嚕咕嚕", patch: "6.45", source: "瑪托雅工作室(水滴精)" },
