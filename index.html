@@ -11,7 +11,7 @@
     <style>
         [v-cloak] { display: none; }
         html, body { height: 100%; margin: 0; }
-        html { font-size: 18px; }
+        html { font-size: 20px; }
         body { line-height: 1.6; background-color: #0f172a; color: #d1d5db; }
 
         /* ── 整體：左右並排，各自從頂到底 ── */
@@ -165,8 +165,8 @@
 
         <!-- 標題 -->
         <header class="top-bar">
-            <h1 class="text-xl tracking-widest text-white font-black uppercase leading-tight">青魔導士每週情報</h1>
-            <p class="text-slate-500 font-mono text-[11px] tracking-widest uppercase">Weekly Challenge & Database</p>
+            <h1 class="text-3xl tracking-widest text-white font-black uppercase leading-tight">青魔導士每週情報</h1>
+            <p class="text-slate-500 font-mono text-[13px] tracking-widest uppercase mt-1">Weekly Challenge & Database</p>
         </header>
 
         <!-- 分頁（置中） -->
@@ -182,7 +182,7 @@
             <div v-if="currentTab === 'weekly'" class="space-y-4 max-w-xl mx-auto">
                 <div class="text-center mb-5">
                     <h2 class="text-base font-black tracking-widest uppercase text-slate-400 flex items-center justify-center gap-2">
-                        <span class="w-1 h-4 bg-blue-500 inline-block"></span> 本週挑戰
+                        本週挑戰
                     </h2>
                     <div class="mt-2 inline-block px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold tracking-widest">
                         {{ weeklyDateRange }}
@@ -221,7 +221,7 @@
             <div v-if="currentTab === 'masquerade'" class="max-w-xl mx-auto">
                 <div class="text-center mb-5">
                     <h2 class="text-base font-black tracking-widest uppercase text-slate-400 flex items-center justify-center gap-2">
-                        <span class="w-1 h-4 bg-purple-500 inline-block"></span> 假面狂歡關卡列表
+                        假面狂歡關卡列表
                     </h2>
                     <p class="text-slate-600 text-xs mt-1">共 {{ masqueradeStages.length }} 層</p>
                 </div>
