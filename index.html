@@ -293,7 +293,7 @@
             <template v-for="skill in filteredSkills" :key="skill.no">
                 <div
                     class="skill-item"
-                    :class="{ expanded: expandedNo === skill.no }"
+                    :class="{ expanded: isExpanded(skill.no) }"
                     :data-no="skill.no"
                     @click="toggleExpand(skill.no)"
                 >
@@ -303,10 +303,10 @@
                     <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
                     <div class="flex items-center gap-1.5 justify-end">
                         <span class="patch-badge">{{ skill.patch }}</span>
-                        <span class="chevron" :class="{ open: expandedNo === skill.no }">▼</span>
+                        <span class="chevron" :class="{ open: isExpanded(skill.no) }">▼</span>
                     </div>
                 </div>
-                <div class="skill-source" :class="{ show: expandedNo === skill.no }">
+                <div class="skill-source" :class="{ show: isExpanded(skill.no) }">
                     {{ skill.source }}
                 </div>
             </template>
@@ -336,6 +336,8 @@
             const totalSkills = lib.length;
             const currentTab  = ref('weekly');
             const expandedNo  = ref(null);
+
+            const isExpanded = (no) => expandedNo.value === no;
 
             const toggleExpand = (no) => {
                 expandedNo.value = expandedNo.value === no ? null : no;
@@ -397,7 +399,7 @@
                 weeklyDateRange, skillSearch, skillListEl,
                 totalSkills, currentTab, masqueradeStages,
                 filteredSkills, goToSkill, activeChallenges,
-                achievementDocs: achDocs, expandedNo, toggleExpand
+                achievementDocs: achDocs, expandedNo, toggleExpand, isExpanded
             };
         }
     }).mount('#app');
