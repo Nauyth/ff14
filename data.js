@@ -178,7 +178,7 @@ const SKILLS_LIBRARY = [
     { no: 87,  spell: "污泥潑灑",      patch: "5.45", source: "聖茉夏娜植物園Hard / 伊爾美格A怪", icon: "https://xivapi.com/i/003000/003338.png" },
     { no: 88,  spell: "天使的點心",    patch: "5.45", source: "圖騰：達到70級", icon: "https://xivapi.com/i/003000/003339.png" },
     { no: 89,  spell: "玄結界",        patch: "5.45", source: "獄之蓋(玄武)", icon: "https://xivapi.com/i/003000/003340.png" },
-    { no: 90,  spell: "鬥靈彈",        patch: "5.45", source: "星導寺(雙豹伊沃恩)", icon: "https://xivapi.com/i/003000/003341.png" },
+    { no: 90,  spell: "鬥靈彈",        patch: "5.45", source: "星導寺(雙豹伊沃恩)", icon: "https://xivapi.com/i/003000/003342.png" },
     { no: 91,  spell: "鬥爭本能",      patch: "5.45", source: "星導寺 / 拉諾西亞高地(高階長須豹)", icon: "https://xivapi.com/i/003000/003343.png" },
     { no: 92,  spell: "超振動",        patch: "5.45", source: "基拉巴尼亞山區(恐甲螞蜓/B怪蛇仆螞蜓)", icon: "https://xivapi.com/i/003000/003344.png" },
     { no: 93,  spell: "冰焰",          patch: "5.45", source: "歐米茄 德爾塔1(老者)", icon: "https://xivapi.com/i/003000/003345.png" },
@@ -211,6 +211,6 @@ const SKILLS_LIBRARY = [
     { no: 120, spell: "糖果手杖",      patch: "6.45", source: "多恩美格禁園(美眼 因克·佐恩)", icon: "https://xivapi.com/i/003000/003373.png" },
     { no: 121, spell: "必滅之炎",      patch: "6.45", source: "宇宙宮(盧格斯)", icon: "https://xivapi.com/i/003000/003374.png" },
     { no: 122, spell: "咕嚕咕嚕",      patch: "6.45", source: "瑪托雅工作室(水滴精)", icon: "https://xivapi.com/i/003000/003375.png" },
-    { no: 123, spell: "默示錄",        patch: "6.45", source: "亞馬烏羅提(至大災獸)", icon: "https://xivapi.com/i/003000/003342.png" },
-    { no: 124, spell: "終有一死",      patch: "6.45", source: "緹坦妮雅殲滅/殲殛戰" }
+    { no: 123, spell: "默示錄",        patch: "6.45", source: "亞馬烏羅提(至大災獸)", icon: "https://xivapi.com/i/003000/003376.png" },
+    { no: 124, spell: "終有一死",      patch: "6.45", source: "緹坦妮雅殲滅/殲殛戰", icon: "https://xivapi.com/i/003000/003377.png" }
 ];
