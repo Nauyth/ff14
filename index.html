@@ -14,7 +14,6 @@
         html { font-size: 20px; }
         body { line-height: 1.6; background-color: #0f172a; color: #d1d5db; }
 
-        /* ── 整體：左右並排，各自從頂到底 ── */
         #app {
             display: flex;
             flex-direction: row;
@@ -22,7 +21,6 @@
             overflow: hidden;
         }
 
-        /* ── 左側主區域：含標題、分頁、內容、頁尾 ── */
         .left-col {
             flex: 1;
             display: flex;
@@ -61,17 +59,8 @@
             user-select: none;
             background-color: transparent;
         }
-        .tab:hover {
-            color: #94a3b8;
-            background-color: #1e293b;
-            border-color: #334155;
-        }
-        .tab.active {
-            color: #60a5fa;
-            background-color: #1e3a5f;
-            border-color: #2563eb66;
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
-        }
+        .tab:hover { color: #94a3b8; background-color: #1e293b; border-color: #334155; }
+        .tab.active { color: #60a5fa; background-color: #1e3a5f; border-color: #2563eb66; box-shadow: 0 0 12px rgba(59,130,246,0.15); }
 
         .left-panel {
             flex: 1;
@@ -87,7 +76,6 @@
             text-align: center;
         }
 
-        /* ── 右側：技能索引，從頂到底 ── */
         .right-col {
             width: 320px;
             flex-shrink: 0;
@@ -108,7 +96,6 @@
             padding: 0.5rem;
         }
 
-        /* 捲軸 */
         .left-panel::-webkit-scrollbar,
         .right-panel-list::-webkit-scrollbar { width: 4px; }
         .left-panel::-webkit-scrollbar-track,
@@ -116,12 +103,10 @@
         .left-panel::-webkit-scrollbar-thumb,
         .right-panel-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
 
-        /* 挑戰卡片 */
         .challenge-card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
         .skill-tag { cursor: pointer; transition: 0.2s; background-color: #334155; border: 1px solid #475569; color: #f1f5f9; }
         .skill-tag:hover { background-color: #475569; border-color: #94a3b8; }
 
-        /* 假面狂歡卡片 */
         .masq-card {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -136,12 +121,11 @@
         .masq-no { font-family: monospace; font-size: 13px; font-weight: 700; color: #64748b; width: 2rem; flex-shrink: 0; }
         .masq-name { color: #f1f5f9; font-weight: 700; font-size: 14px; flex: 1; }
 
-        /* 搜尋框 */
         .search-input { background-color: #020617; border: 2px solid #1e293b; color: #ffffff; width: 100%; font-size: 13px; }
         .search-input:focus { outline: none; border-color: #3b82f6; }
         .search-input::placeholder { color: #475569; }
 
-        /* 技能列表 */
+        /* 技能列表 - 展開式 */
         .skill-item {
             display: grid;
             grid-template-columns: 2rem 2rem 1fr auto;
@@ -151,22 +135,35 @@
             border-radius: 6px;
             transition: 0.15s;
             min-height: 2.4rem;
-        }
-        .skill-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 4px;
-            object-fit: cover;
-            background-color: #1e293b;
-        }
-        .skill-icon-placeholder {
-            width: 28px;
-            height: 28px;
-            border-radius: 4px;
-            background-color: #1e293b;
-            border: 1px solid #334155;
+            cursor: pointer;
         }
         .skill-item:hover { background-color: #1e293b; }
+        .skill-item.expanded { background-color: #1e293b; border-radius: 6px 6px 0 0; }
+
+        .skill-source {
+            display: none;
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            padding: 6px 10px 8px;
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 2px;
+        }
+        .skill-source.show { display: block; }
+
+        .chevron {
+            font-size: 9px;
+            color: #475569;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .chevron.open { transform: rotate(180deg); }
+
+        .skill-icon { width: 28px; height: 28px; border-radius: 4px; object-fit: cover; background-color: #1e293b; }
+        .skill-icon-placeholder { width: 28px; height: 28px; border-radius: 4px; background-color: #1e293b; border: 1px solid #334155; }
 
         .patch-badge {
             font-size: 10px; padding: 1px 5px; border-radius: 4px;
@@ -174,7 +171,6 @@
             color: #60a5fa; font-family: monospace; white-space: nowrap;
         }
 
-        /* RWD */
         @media (max-width: 768px) {
             #app { flex-direction: column; height: auto; overflow: visible; }
             .left-col { overflow: visible; }
@@ -186,22 +182,18 @@
 <body>
 <div id="app" v-cloak>
 
-    <!-- ── 左側主區域 ── -->
     <div class="left-col">
 
-        <!-- 標題 -->
         <header class="top-bar">
             <h1 class="text-3xl tracking-widest text-white font-black uppercase leading-tight">青魔導士每週情報</h1>
             <p class="text-slate-500 font-mono text-[13px] tracking-widest uppercase mt-1">Weekly Challenge & Database</p>
         </header>
 
-        <!-- 分頁（置中） -->
         <nav class="tab-bar">
             <div class="tab" :class="{ active: currentTab === 'weekly' }" @click="currentTab = 'weekly'">本週挑戰</div>
             <div class="tab" :class="{ active: currentTab === 'masquerade' }" @click="currentTab = 'masquerade'">假面狂歡 <span class="text-slate-500 font-normal normal-case tracking-normal">(製作中)</span></div>
         </nav>
 
-        <!-- 主內容 -->
         <main class="left-panel">
 
             <!-- 本週挑戰 -->
@@ -261,7 +253,6 @@
 
         </main>
 
-        <!-- 頁尾 -->
         <footer class="footer-bar">
             <p class="text-[11px] text-slate-500 leading-relaxed">
                 FINAL FANTASY XIV © 2010 - 2026 SQUARE ENIX CO., LTD. All Rights Reserved.<br>
@@ -275,7 +266,7 @@
 
     </div>
 
-    <!-- ── 右側：技能索引，從頂到底 ── -->
+    <!-- 右側：技能索引 -->
     <aside class="right-col">
         <div class="right-panel-header">
             <div class="flex items-center gap-2 mb-2">
@@ -316,8 +307,6 @@
         </div>
     </aside>
 
-
-
 </div>
 
 <script>
@@ -343,13 +332,11 @@
                 expandedNo.value = expandedNo.value === no ? null : no;
             };
 
-            // 假面狂歡 01~32
             const masqueradeStages = Object.entries(stages)
                 .filter(([id]) => parseInt(id) >= 1 && parseInt(id) <= 32)
                 .map(([id, name]) => ({ id, name }))
                 .sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
-            // 挑戰卡片
             const activeChallenges = computed(() =>
                 config.challenges.map(d => {
                     const tagClass =
@@ -369,7 +356,6 @@
                 })
             );
 
-            // 搜尋
             const filteredSkills = computed(() => {
                 const q = skillSearch.value.toLowerCase().trim();
                 if (!q) return lib;
@@ -384,7 +370,6 @@
                 );
             });
 
-            // 點擊推薦技能 → 搜尋、展開、捲動
             const goToSkill = async (no) => {
                 skillSearch.value = '#' + String(no).padStart(2, '0');
                 expandedNo.value = no;
