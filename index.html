@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>青魔導士每週情報</title>
+    <title>青魔導士每週情報站</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="data.js"></script>
@@ -298,7 +298,7 @@
                     </div>
                 </div>
                 <div class="skill-source" :class="{ show: isExpanded(skill.no) }">
-                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 1px 0;">{{ src }}</div>
+                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: baseline; gap: 6px;"><span style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span><span>{{ src }}</span></div>
                 </div>
             </template>
             <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
