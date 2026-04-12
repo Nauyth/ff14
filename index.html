@@ -81,7 +81,7 @@
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            border-left: 1px solid #1e293b;
+            border-right: 1px solid #1e293b;
             background-color: #0a1120;
             overflow: hidden;
         }
@@ -182,6 +182,46 @@
 <body>
 <div id="app" v-cloak>
 
+    <!-- 右側：技能索引 -->
+    <aside class="right-col">
+        <div class="right-panel-header">
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-black tracking-widest uppercase text-slate-400">技能索引</span>
+            </div>
+            <input
+                v-model="skillSearch"
+                type="text"
+                placeholder="搜尋名稱、來源或 #編號"
+                class="search-input rounded-lg px-3 py-2 font-bold"
+            >
+        </div>
+        <div class="right-panel-list" ref="skillListEl">
+            <template v-for="skill in filteredSkills" :key="skill.no">
+                <div
+                    class="skill-item"
+                    :class="{ expanded: isExpanded(skill.no) }"
+                    :data-no="skill.no"
+                    @click="toggleExpand(skill.no)"
+                >
+                    <span class="font-mono text-xs text-slate-600 font-bold">{{ String(skill.no).padStart(2, '0') }}</span>
+                    <img v-if="skill.icon" :src="skill.icon" class="skill-icon" :alt="skill.spell" loading="lazy">
+                    <div v-else class="skill-icon-placeholder"></div>
+                    <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
+                    <div class="flex items-center gap-1.5 justify-end">
+                        <span class="patch-badge">{{ skill.patch }}</span>
+                        <span class="chevron" :class="{ open: isExpanded(skill.no) }">▼</span>
+                    </div>
+                </div>
+                <div class="skill-source" :class="{ show: isExpanded(skill.no) }">
+                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: baseline; gap: 6px;"><span style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span><span>{{ src }}</span></div>
+                </div>
+            </template>
+            <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
+                找不到相關技能
+            </div>
+        </div>
+    </aside>
+
     <div class="left-col">
 
         <header class="top-bar">
@@ -265,47 +305,6 @@
         </footer>
 
     </div>
-
-    <!-- 右側：技能索引 -->
-    <aside class="right-col">
-        <div class="right-panel-header">
-            <div class="flex items-center gap-2 mb-2">
-                <span class="text-xs font-black tracking-widest uppercase text-slate-400">技能索引</span>
-                <span class="text-xs text-slate-600 font-mono">{{ filteredSkills.length }} / {{ totalSkills }}</span>
-            </div>
-            <input
-                v-model="skillSearch"
-                type="text"
-                placeholder="搜尋名稱、來源或 #編號"
-                class="search-input rounded-lg px-3 py-2 font-bold"
-            >
-        </div>
-        <div class="right-panel-list" ref="skillListEl">
-            <template v-for="skill in filteredSkills" :key="skill.no">
-                <div
-                    class="skill-item"
-                    :class="{ expanded: isExpanded(skill.no) }"
-                    :data-no="skill.no"
-                    @click="toggleExpand(skill.no)"
-                >
-                    <span class="font-mono text-xs text-slate-600 font-bold">{{ String(skill.no).padStart(2, '0') }}</span>
-                    <img v-if="skill.icon" :src="skill.icon" class="skill-icon" :alt="skill.spell" loading="lazy">
-                    <div v-else class="skill-icon-placeholder"></div>
-                    <span class="text-white font-bold text-sm truncate">{{ skill.spell }}</span>
-                    <div class="flex items-center gap-1.5 justify-end">
-                        <span class="patch-badge">{{ skill.patch }}</span>
-                        <span class="chevron" :class="{ open: isExpanded(skill.no) }">▼</span>
-                    </div>
-                </div>
-                <div class="skill-source" :class="{ show: isExpanded(skill.no) }">
-                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: baseline; gap: 6px;"><span style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span><span>{{ src }}</span></div>
-                </div>
-            </template>
-            <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
-                找不到相關技能
-            </div>
-        </div>
-    </aside>
 
 </div>
 
