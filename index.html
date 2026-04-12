@@ -17,16 +17,7 @@
         .skill-tag { cursor: pointer; transition: 0.2s; background-color: #334155; border: 1px solid #475569; color: #f1f5f9; }
         .skill-tag:hover { background-color: #475569; border-color: #94a3b8; }
 
-        /* Tooltip */
-        .tooltip-container { position: relative; display: inline-block; }
-        .tooltip-text {
-            visibility: hidden; width: 280px; background-color: #334155; color: #f1f5f9;
-            text-align: center; border-radius: 6px; padding: 10px; position: absolute;
-            z-index: 50; bottom: 125%; left: 50%; margin-left: -140px; opacity: 0;
-            transition: 0.3s; border: 1px solid #475569; font-size: 16px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-        }
-        .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
+
 
         /* 搜尋框 */
         .search-input { background-color: #020617; border: 2px solid #334155; color: #ffffff; }
@@ -104,9 +95,9 @@
 
                 <!-- 成就 -->
                 <div v-if="c.achievements.length > 0" class="flex flex-wrap gap-2 mb-4">
-                    <div v-for="achName in c.achievements" class="tooltip-container">
-                        <div class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 font-bold">🏆 {{ achName }}</div>
-                        <span class="tooltip-text font-bold">{{ achievementDocs[achName] || '暫無說明' }}</span>
+                    <div v-for="achName in c.achievements" class="source-tooltip">
+                        <div class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 font-bold cursor-help">🏆 {{ achName }} ⓘ</div>
+                        <div class="source-full">{{ achievementDocs[achName] || '暫無說明' }}</div>
                     </div>
                 </div>
 
