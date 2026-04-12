@@ -213,7 +213,7 @@
                     </div>
                 </div>
                 <div class="skill-source" :class="{ show: isExpanded(skill.no) }">
-                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: baseline; gap: 6px;"><span style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span><span>{{ src }}</span></div>
+                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: center; gap: 6px;"><span style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span><span>{{ src }}</span></div>
                 </div>
             </template>
             <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
