@@ -17,7 +17,7 @@ const WEEKLY_CONFIG = {
         {
             level: "高級",
             stageId: "03",
-            achievements: ["未曾恢復", "不急不慢", "四招足以"],
+            achievements: ["未曾恢復", "不緊不慢", "四招足以"],
             skills: [63, 109, 121, 24]
         }
     ]
