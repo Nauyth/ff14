@@ -4,21 +4,24 @@ const WEEKLY_CONFIG = {
     challenges: [
         {
             level: "初級",
-            stageId: "13",
+            stageId: "07",
             achievements: [],
-            skills: [63, 109, 121, 33, 92]
+            skills: [31, 25, 63],
+            note: ""
         },
         {
             level: "中級",
-            stageId: "09",
-            achievements: ["弱化高手"],
-            skills: [63, 109, 121, 28, 24]
+            stageId: "03",
+            achievements: ["水系大師"],
+            skills: [1, 9, 109, 24],
+            note: ""
         },
         {
             level: "高級",
-            stageId: "03",
-            achievements: ["未曾恢復", "不緊不慢", "四招足以"],
-            skills: [63, 109, 121, 24]
+            stageId: "18",
+            achievements: ["高速通關", "高階法師"],
+            skills: [63, 124, 103],
+            note: ""
         }
     ]
 };
