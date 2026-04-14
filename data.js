@@ -14,7 +14,7 @@ const WEEKLY_CONFIG = {
             stageId: "09",
             achievements: ["弱化高手"],
             skills: [63, 109, 121, 28, 24],
-            note: "如果血量有壓力可以帶冰+超震動清理小怪"
+            note: "對小怪使用臭氣就滿足條件了 剩下隨意攜帶傷害技能"
         },
         {
             level: "高級",
