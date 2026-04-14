@@ -14,14 +14,14 @@ const WEEKLY_CONFIG = {
             stageId: "09",
             achievements: ["弱化高手"],
             skills: [63, 109, 121, 28, 24],
-            note: ""
+            note: "如果血量有壓力可以帶冰+超震動清理小怪"
         },
         {
             level: "高級",
             stageId: "03",
             achievements: ["未曾恢復", "不緊不慢", "四招足以"],
             skills: [63, 109, 121, 24],
-            note: ""
+            note: "沒有必滅之炎就換成苦悶之歌"
         }
     ]
 };
