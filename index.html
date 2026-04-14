@@ -376,7 +376,25 @@
             const achDocs = typeof ACHIEVEMENT_DOCS !== 'undefined' ? ACHIEVEMENT_DOCS : {};
             const config  = typeof WEEKLY_CONFIG    !== 'undefined' ? WEEKLY_CONFIG    : { dateRange: '', challenges: [] };
 
-            const weeklyDateRange = config.dateRange;
+            // 自動計算當週週二到下週一的日期
+            const getWeeklyDateRange = () => {
+                const now = new Date();
+                const day = now.getDay(); // 0=日, 1=一, 2=二...
+                // 計算距離上一個週二的天數
+                const diffToTuesday = day >= 2 ? day - 2 : day + 5;
+                const tuesday = new Date(now);
+                tuesday.setDate(now.getDate() - diffToTuesday);
+                const monday = new Date(tuesday);
+                monday.setDate(tuesday.getDate() + 6);
+                const fmt = (d) => {
+                    const y = d.getFullYear();
+                    const m = String(d.getMonth() + 1).padStart(2, '0');
+                    const dd = String(d.getDate()).padStart(2, '0');
+                    return y + '/' + m + '/' + dd;
+                };
+                return fmt(tuesday) + ' — ' + fmt(monday);
+            };
+            const weeklyDateRange = getWeeklyDateRange();
             const skillSearch = ref('');
             const skillListEl = ref(null);
             const totalSkills = lib.length;
