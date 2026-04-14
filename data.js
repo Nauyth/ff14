@@ -21,7 +21,7 @@ const WEEKLY_CONFIG = {
             stageId: "03",
             achievements: ["未曾恢復", "不緊不慢", "四招足以"],
             skills: [63, 109, 121, 24],
-            note: "沒有必滅之炎就換成苦悶之歌"
+            note: "音爆可以換成水槍 必滅之炎可以換成苦悶之歌"
         }
     ]
 };
