@@ -104,7 +104,6 @@
         .right-panel-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
 
         .challenge-card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
-
         .note-bar {
             margin: 0 16px 14px;
             background: #0f172a;
@@ -114,7 +113,6 @@
         }
         .note-bar-label { font-size: 10px; font-weight: 800; color: #f97316; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
         .note-bar-text { font-size: 13px; color: #cbd5e1; line-height: 1.6; }
-
         .skill-tag { cursor: pointer; transition: 0.2s; background-color: #334155; border: 1px solid #475569; color: #f1f5f9; }
         .skill-tag:hover { background-color: #475569; border-color: #94a3b8; }
 
@@ -136,6 +134,7 @@
         .search-input:focus { outline: none; border-color: #3b82f6; }
         .search-input::placeholder { color: #475569; }
 
+        /* 技能列表 - 展開式 */
         .skill-item {
             display: grid;
             grid-template-columns: 2rem 2rem 1fr auto;
@@ -209,7 +208,7 @@
 <body>
 <div id="app" v-cloak>
 
-    <!-- 左側：技能索引 -->
+    <!-- 右側：技能索引 -->
     <aside class="right-col">
         <div class="right-panel-header">
             <div class="flex items-center gap-2 mb-2">
@@ -301,11 +300,6 @@
                         >#{{ String(s.no).padStart(2, '0') }} {{ s.spell }}</span>
                     </div>
                 </div>
-                <div v-if="c.note" class="note-bar">
-                    <div class="note-bar-label">攻略備註</div>
-                    <div class="note-bar-text">{{ c.note }}</div>
-                </div>
-
             </div>
 
             <!-- 假面狂歡 -->
@@ -391,9 +385,11 @@
             const achDocs = typeof ACHIEVEMENT_DOCS !== 'undefined' ? ACHIEVEMENT_DOCS : {};
             const config  = typeof WEEKLY_CONFIG    !== 'undefined' ? WEEKLY_CONFIG    : { dateRange: '', challenges: [] };
 
+            // 自動計算當週週二到下週一的日期
             const getWeeklyDateRange = () => {
                 const now = new Date();
-                const day = now.getDay();
+                const day = now.getDay(); // 0=日, 1=一, 2=二...
+                // 計算距離上一個週二的天數
                 const diffToTuesday = day >= 2 ? day - 2 : day + 5;
                 const tuesday = new Date(now);
                 tuesday.setDate(now.getDate() - diffToTuesday);
