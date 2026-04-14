@@ -6,13 +6,13 @@ const WEEKLY_CONFIG = {
             level: "初級",
             stageId: "13",
             achievements: [],
-            skills: [63, 109, 121, 33, 92, 9, 3, 24]
+            skills: [63, 109, 121, 33, 92]
         },
         {
             level: "中級",
             stageId: "09",
             achievements: ["弱化高手"],
-            skills: [63, 109, 121, 33, 92, 9, 3, 24, 65, 37]
+            skills: [63, 109, 121, 28, 24]
         },
         {
             level: "高級",
