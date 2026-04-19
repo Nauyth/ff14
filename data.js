@@ -93,8 +93,8 @@ const ACHIEVEMENT_DOCS = {
 // 4. 完整技能庫（124招）
 const SKILLS_LIBRARY = [
     { no: 1,   spell: "水槍",          patch: "4.5",  source: "最初已學會", icon: "https://xivapi.com/i/003000/003253.png" },
-    { no: 2,   spell: "火炎放射",      patch: "4.5",  source: "紛爭要地布雷福洛克斯野營地-6號哥布林坦克(Boss#3) / 幻龍殘骸密約之塔-獨爪妖禽(BOSS#1) 魔導砲艇(BOSS#2)", icon: "https://xivapi.com/i/003000/003270.png" },
-    { no: 3,   spell: "水紋吐息",      patch: "4.5",  source: "9艾瑪姬娜杯鬥技大會決賽-奧爾特羅斯 / 假面狂歡20層-奧爾特羅斯 / 利維坦殲滅戰 / 極利維坦殲滅戰", icon: "https://xivapi.com/i/003000/003258.png" },
+    { no: 2,   spell: "火炎放射",      patch: "4.5",  source: "dungeon:紛爭要地布雷福洛克斯野營地-6號哥布林坦克(Boss#3) / dungeon:幻龍殘骸密約之塔-獨爪妖禽(BOSS#1) 魔導砲艇(BOSS#2)", icon: "https://xivapi.com/i/003000/003270.png" },
+    { no: 3,   spell: "水紋吐息",      patch: "4.5",  source: "trial:艾瑪姬娜杯鬥技大會決賽-奧爾特羅斯 / trial:假面狂歡20層-奧爾特羅斯 / trial:利維坦殲滅戰 / trial:極利維坦殲滅戰", icon: "https://xivapi.com/i/003000/003258.png" },
     { no: 4,   spell: "狂亂",          patch: "4.5",  source: "領航天狼星燈塔-祖(BOSS#2)(打破兩顆蛋後使用) / 拉諾西亞外地-角祖(A怪)", icon: "https://xivapi.com/i/003000/003257.png" },
     { no: 5,   spell: "鑽頭砲",        patch: "4.5",  source: "北薩納蘭(廢棄先鋒) / 紛爭要地布雷福洛克斯野營地(哥布林裝甲) / 南方堡 / 魔導城", icon: "https://xivapi.com/i/003000/003266.png" },
     { no: 6,   spell: "高壓電流",      patch: "4.5",  source: "巴哈姆特大迷宮 邂逅1&2 / 假面狂歡15(鬥獸系統)", icon: "https://xivapi.com/i/003000/003255.png" },
