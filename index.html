@@ -240,7 +240,11 @@
                     </div>
                 </div>
                 <div class="skill-source" :class="{ show: isExpanded(skill.no) }">
-                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: center; gap: 6px;"><span style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span><span>{{ src }}</span></div>
+                    <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: center; gap: 6px;">
+                        <img v-if="getSourceIcon(src)" :src="getSourceIcon(src)" style="width:18px;height:18px;flex-shrink:0;">
+                        <span v-else style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span>
+                        <span>{{ stripPrefix(src) }}</span>
+                    </div>
                 </div>
             </template>
             <div v-if="filteredSkills.length === 0" class="text-center py-10 text-slate-600 text-sm">
@@ -478,11 +482,34 @@
                 }
             };
 
+            const SOURCE_ICONS = {
+                'dungeon': 'https://xivapi.com/i/061000/061801.png',
+                'raid':    'https://xivapi.com/i/061000/061802.png',
+                'quest':   'https://xivapi.com/i/061000/061803.png',
+                'trial':   'https://xivapi.com/i/061000/061804.png',
+                'field':   'https://xivapi.com/i/061000/061807.png',
+            };
+
+            const getSourceIcon = (src) => {
+                const prefix = src.split(':')[0].trim().toLowerCase();
+                return SOURCE_ICONS[prefix] || null;
+            };
+
+            const stripPrefix = (src) => {
+                const knownPrefixes = Object.keys(SOURCE_ICONS);
+                const prefix = src.split(':')[0].trim().toLowerCase();
+                if (knownPrefixes.includes(prefix)) {
+                    return src.substring(src.indexOf(':') + 1).trim();
+                }
+                return src;
+            };
+
             return {
                 weeklyDateRange, skillSearch, skillListEl,
                 totalSkills, currentTab, masqueradeStages,
                 filteredSkills, goToSkill, activeChallenges,
-                achievementDocs: achDocs, expandedNo, toggleExpand, isExpanded
+                achievementDocs: achDocs, expandedNo, toggleExpand, isExpanded,
+                getSourceIcon, stripPrefix
             };
         }
     }).mount('#app');
