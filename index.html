@@ -241,7 +241,7 @@
                 </div>
                 <div class="skill-source" :class="{ show: isExpanded(skill.no) }">
                     <div v-for="(src, i) in skill.source.split(' / ')" :key="i" style="padding: 2px 0; display: flex; align-items: center; gap: 6px;">
-                        <img v-if="getSourceIcon(src)" :src="getSourceIcon(src)" style="width:18px;height:18px;flex-shrink:0;">
+                        <img v-if="getSourceIcon(src)" :src="getSourceIcon(src)" style="width:24px;height:24px;flex-shrink:0;">
                         <span v-else style="color: #3b82f6; font-size: 8px; flex-shrink: 0;">●</span>
                         <span>{{ stripPrefix(src) }}</span>
                     </div>
