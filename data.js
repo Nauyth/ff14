@@ -93,9 +93,9 @@ const ACHIEVEMENT_DOCS = {
 // 4. 完整技能庫（124招）
 const SKILLS_LIBRARY = [
     { no: 1,   spell: "水槍",          patch: "4.5",  source: "最初已學會", icon: "https://xivapi.com/i/003000/003253.png" },
-    { no: 2,   spell: "火炎放射",      patch: "4.5",  source: "紛爭要地布雷福洛克斯野營地(6號哥布林坦克) / 幻龍殘骸密約之塔(獨爪妖禽)", icon: "https://xivapi.com/i/003000/003270.png" },
-    { no: 3,   spell: "水紋吐息",      patch: "4.5",  source: "亞拉戈鬥技場(奧爾特羅斯) / 假面狂歡20 / 利維坦殲滅戰or極", icon: "https://xivapi.com/i/003000/003258.png" },
-    { no: 4,   spell: "狂亂",          patch: "4.5",  source: "領航天狼星燈塔(祖) / 拉諾西亞外地(角祖)", icon: "https://xivapi.com/i/003000/003257.png" },
+    { no: 2,   spell: "火炎放射",      patch: "4.5",  source: "紛爭要地布雷福洛克斯野營地-6號哥布林坦克(Boss#3) / 幻龍殘骸密約之塔-獨爪妖禽(BOSS#1) 魔導砲艇(BOSS#2)", icon: "https://xivapi.com/i/003000/003270.png" },
+    { no: 3,   spell: "水紋吐息",      patch: "4.5",  source: "9艾瑪姬娜杯鬥技大會決賽-奧爾特羅斯 / 假面狂歡20層-奧爾特羅斯 / 利維坦殲滅戰 / 極利維坦殲滅戰", icon: "https://xivapi.com/i/003000/003258.png" },
+    { no: 4,   spell: "狂亂",          patch: "4.5",  source: "領航天狼星燈塔-祖(BOSS#2)(打破兩顆蛋後使用) / 拉諾西亞外地-角祖(A怪)", icon: "https://xivapi.com/i/003000/003257.png" },
     { no: 5,   spell: "鑽頭砲",        patch: "4.5",  source: "北薩納蘭(廢棄先鋒) / 紛爭要地布雷福洛克斯野營地(哥布林裝甲) / 南方堡 / 魔導城", icon: "https://xivapi.com/i/003000/003266.png" },
     { no: 6,   spell: "高壓電流",      patch: "4.5",  source: "巴哈姆特大迷宮 邂逅1&2 / 假面狂歡15(鬥獸系統)", icon: "https://xivapi.com/i/003000/003255.png" },
     { no: 7,   spell: "若隱若現",      patch: "4.5",  source: "北薩納蘭(菲蘭德副耀士) / 無限城市街古蹟 / 塔姆塔拉墓園", icon: "https://xivapi.com/i/003000/003269.png" },
