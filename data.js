@@ -92,14 +92,14 @@ const ACHIEVEMENT_DOCS = {
 
 // 4. 完整技能庫（124招）
 const SKILLS_LIBRARY = [
-    { no: 1,   spell: "水槍",          patch: "4.5",  source: "最初已學會", icon: "https://xivapi.com/i/003000/003253.png" },
+    { no: 1,   spell: "水槍",          patch: "4.5",  source: "quest:最初已學會", icon: "https://xivapi.com/i/003000/003253.png" },
     { no: 2,   spell: "火炎放射",      patch: "4.5",  source: "dungeon:紛爭要地布雷福洛克斯野營地-6號哥布林坦克(Boss#3) / dungeon:幻龍殘骸密約之塔-獨爪妖禽(BOSS#1) 魔導砲艇(BOSS#2)", icon: "https://xivapi.com/i/003000/003270.png" },
     { no: 3,   spell: "水紋吐息",      patch: "4.5",  source: "trial:艾瑪姬娜杯鬥技大會決賽-奧爾特羅斯 / trial:假面狂歡20層-奧爾特羅斯 / trial:利維坦殲滅戰 / trial:極利維坦殲滅戰", icon: "https://xivapi.com/i/003000/003258.png" },
     { no: 4,   spell: "狂亂",          patch: "4.5",  source: "dungeon:領航天狼星燈塔-祖(BOSS#2)(打破兩顆蛋後使用) / field:拉諾西亞外地-角祖(A怪)", icon: "https://xivapi.com/i/003000/003257.png" },
-    { no: 5,   spell: "鑽頭砲",        patch: "4.5",  source: "field:北薩納蘭(廢棄先鋒) / dungeon:紛爭要地布雷福洛克斯野營地(哥布林裝甲) / dungeon:南方堡 / dungeon:魔導城", icon: "https://xivapi.com/i/003000/003266.png" },
-    { no: 6,   spell: "高壓電流",      patch: "4.5",  source: "raid:巴哈姆特大迷宮 邂逅1&2 / trial:假面狂歡15層-鬥獸系統", icon: "https://xivapi.com/i/003000/003255.png" },
-    { no: 7,   spell: "若隱若現",      patch: "4.5",  source: "北薩納蘭(菲蘭德副耀士) / 無限城市街古蹟 / 塔姆塔拉墓園", icon: "https://xivapi.com/i/003000/003269.png" },
-    { no: 8,   spell: "最終刺針",      patch: "4.5",  source: "中拉諾西亞(殺手胡蜂) / 喀恩埋沒聖堂(聖堂蜂)", icon: "https://xivapi.com/i/003000/003275.png" },
+    { no: 5,   spell: "鑽頭砲",        patch: "4.5",  source: "field:北薩納蘭-魔導先鋒強化型(血量60%以下發動) / dungeon:紛爭要地布雷福洛克斯野營地-3號哥布林裝甲(BOSS#2)", icon: "https://xivapi.com/i/003000/003266.png" },
+    { no: 6,   spell: "高壓電流",      patch: "4.5",  source: "raid:巴哈姆特大迷宮邂逅之章1-自衛系統(BOSS#1) / raid:巴哈姆特大迷宮邂逅之章2 / trial:假面狂歡15層-鬥獸系統", icon: "https://xivapi.com/i/003000/003255.png" },
+    { no: 7,   spell: "若隱若現",      patch: "4.5",  source: "field:北薩納蘭-菲蘭德副耀士(B怪) / dungeon:腐敗遺跡無限城市街古跡-巴爾澤芬(道中小怪) / dungeon:慘劇靈殿塔姆塔拉墓園-但他林(道中小怪)", icon: "https://xivapi.com/i/003000/003269.png" },
+    { no: 8,   spell: "最終刺針",      patch: "4.5",  source: "field:中拉諾西亞-殺手胡蜂 / dungeon:古代遺跡喀恩埋沒聖堂-聖堂蜂(道中小怪)", icon: "https://xivapi.com/i/003000/003275.png" },
     { no: 9,   spell: "苦悶之歌",      patch: "4.5",  source: "天狼星燈塔(塞壬)", icon: "https://xivapi.com/i/003000/003254.png" },
     { no: 10,  spell: "怒視",          patch: "4.5",  source: "黃金谷(數幣巨人) / 中薩納蘭S怪(布隆特斯)", icon: "https://xivapi.com/i/003000/003272.png" },
     { no: 11,  spell: "平原震裂",      patch: "4.5",  source: "各區巨像 / 銅鈴銅山 / 喀恩埋沒聖堂 / 假面狂歡25", icon: "https://xivapi.com/i/003000/003259.png" },
