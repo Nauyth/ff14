@@ -4,24 +4,24 @@ const WEEKLY_CONFIG = {
     challenges: [
         {
             level: "初級",
-            stageId: "13",
+            stageId: "10",
             achievements: [],
-            skills: [63, 109, 121, 33, 92],
-            note: ""
+            skills: [63, 109, 24],
+            note: "記得打斷"
         },
         {
             level: "中級",
-            stageId: "09",
-            achievements: ["弱化高手"],
-            skills: [63, 109, 121, 28, 24],
-            note: "對小怪使用臭氣就滿足條件了 剩下隨意攜帶傷害技能"
+            stageId: "14",
+            achievements: ["未曾恢復"],
+            skills: [63, 07],
+            note: "打死怪後用若隱若現瞬移"
         },
         {
             level: "高級",
-            stageId: "03",
-            achievements: ["未曾恢復", "不緊不慢", "四招足以"],
-            skills: [63, 109, 121, 24],
-            note: "音爆可以換成水槍 必滅之炎可以換成苦悶之歌"
+            stageId: "08",
+            achievements: ["高速通關", "水系大師", "四招足以"],
+            skills: [01, 109, 24],
+            note: "記得打斷"
         }
     ]
 };
