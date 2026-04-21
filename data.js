@@ -21,7 +21,7 @@ const WEEKLY_CONFIG = {
             stageId: "08",
             achievements: ["高速通關", "水系大師", "四招足以"],
             skills: [01, 109, 24],
-            note: "記得打斷"
+            note: "P2記得打斷 或是改帶石化+超震動等冰凍結束後石化"
         }
     ]
 };
