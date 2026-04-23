@@ -200,7 +200,7 @@ const SKILLS_LIBRARY = [
     { no: 106, spell: "大迴旋",        patch: "6.45", source: "馬利卡大井(大犰狳)", icon: "https://xivapi.com/i/003000/003359.png" },
     { no: 107, spell: "刺陣",          patch: "6.45", source: "安穆·艾蘭(長尾犰狳) / 薩維奈島B怪", icon: "https://xivapi.com/i/003000/003360.png" },
     { no: 108, spell: "補水",          patch: "6.45", source: "安穆·艾蘭(滑溜犰狳)", icon: "https://xivapi.com/i/003000/003361.png" },
-    { no: 109, spell: "魔力吐息",      patch: "6.45", source: "圖騰：達到80級", icon: "https://xivapi.com/i/003000/003362.png" },
+    { no: 109, spell: "魔法吐息",      patch: "6.45", source: "圖騰：達到80級", icon: "https://xivapi.com/i/003000/003362.png" },
     { no: 110, spell: "獸魂的憤怒",    patch: "6.45", source: "諾弗蘭特(幻光狂戰士)", icon: "https://xivapi.com/i/003000/003363.png" },
     { no: 111, spell: "玩泥球",        patch: "6.45", source: "瑪托雅工作室(土泥人)", icon: "https://xivapi.com/i/003000/003364.png" },
     { no: 112, spell: "大掃除",        patch: "6.45", source: "宇宙宮(宮殿的隱者)", icon: "https://xivapi.com/i/003000/003365.png" },
