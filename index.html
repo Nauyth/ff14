@@ -398,6 +398,10 @@
                                 </div>
                             </template>
                         </div>
+                        <div v-if="s.note" class="note-bar" style="width: 100%;">
+                            <div class="note-bar-label">攻略備註</div>
+                            <div class="note-bar-text">{{ s.note }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -511,14 +515,18 @@
 
             const masqueradeStages = Object.entries(stages)
                 .filter(([id]) => parseInt(id) >= 1 && parseInt(id) <= 32)
-                .map(([id, name]) => ({
-                    id,
-                    name,
-                    recommendedSkills: (masqSkills[id] || []).map(no => {
-                        const found = lib.find(s => s.no === no);
-                        return found ?? { no, spell: '未知技能' };
-                    })
-                }))
+                .map(([id, name]) => {
+                    const entry = masqSkills[id] || { skills: [], note: "" };
+                    return {
+                        id,
+                        name,
+                        note: entry.note || "",
+                        recommendedSkills: (entry.skills || []).map(no => {
+                            const found = lib.find(s => s.no === no);
+                            return found ?? { no, spell: '未知技能' };
+                        })
+                    };
+                })
                 .sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
             const activeChallenges = computed(() =>
