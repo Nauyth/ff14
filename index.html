@@ -146,7 +146,7 @@
             opacity: 0.4;
         }
         .skill-cell-no {
-            font-size: 14px;
+            font-size: 16px;
             color: #64748b;
             font-family: monospace;
             font-weight: 700;
@@ -352,7 +352,7 @@
                         </div>
                     </div>
                     <div class="skill-grid">
-                        <template v-for="i in 8" :key="i">
+                        <template v-for="i in 12" :key="i">
                             <div v-if="c.recommendedSkills[i-1]" class="skill-cell" @click="goToSkill(c.recommendedSkills[i-1].no)">
                                 <div class="skill-cell-tooltip">#{{ String(c.recommendedSkills[i-1].no).padStart(2, '0') }} {{ c.recommendedSkills[i-1].spell }}</div>
                                 <img v-if="c.recommendedSkills[i-1].icon" :src="c.recommendedSkills[i-1].icon" :alt="c.recommendedSkills[i-1].spell">
@@ -382,9 +382,25 @@
                     <p class="text-slate-600 text-xs mt-1">共 {{ masqueradeStages.length }} 層</p>
                 </div>
                 <div class="space-y-2">
-                    <div v-for="s in masqueradeStages" :key="s.id" class="masq-card">
-                        <span class="masq-no">{{ s.id }}</span>
-                        <span class="masq-name">{{ s.name }}</span>
+                    <div v-for="s in masqueradeStages" :key="s.id" class="masq-card" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+                            <span class="masq-no">{{ s.id }}</span>
+                            <span class="masq-name">{{ s.name }}</span>
+                        </div>
+                        <div class="skill-grid" style="grid-template-columns: repeat(24, 1fr); width: 100%;">
+                            <template v-for="i in 24" :key="i">
+                                <div v-if="s.recommendedSkills[i-1]" class="skill-cell" @click="goToSkill(s.recommendedSkills[i-1].no)">
+                                    <div class="skill-cell-tooltip">#{{ String(s.recommendedSkills[i-1].no).padStart(2, '0') }} {{ s.recommendedSkills[i-1].spell }}</div>
+                                    <img v-if="s.recommendedSkills[i-1].icon" :src="s.recommendedSkills[i-1].icon" :alt="s.recommendedSkills[i-1].spell">
+                                    <div v-else class="skill-empty"></div>
+                                    <div class="skill-cell-no">{{ s.recommendedSkills[i-1].no }}</div>
+                                </div>
+                                <div v-else class="skill-cell">
+                                    <div class="skill-empty"></div>
+                                    <div class="skill-cell-no-empty">0</div>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -461,10 +477,11 @@
 
     createApp({
         setup() {
-            const lib     = typeof SKILLS_LIBRARY   !== 'undefined' ? SKILLS_LIBRARY   : [];
-            const stages  = typeof STAGES_DATA      !== 'undefined' ? STAGES_DATA      : {};
-            const achDocs = typeof ACHIEVEMENT_DOCS !== 'undefined' ? ACHIEVEMENT_DOCS : {};
-            const config  = typeof WEEKLY_CONFIG    !== 'undefined' ? WEEKLY_CONFIG    : { dateRange: '', challenges: [] };
+            const lib       = typeof SKILLS_LIBRARY     !== 'undefined' ? SKILLS_LIBRARY     : [];
+            const stages    = typeof STAGES_DATA        !== 'undefined' ? STAGES_DATA        : {};
+            const achDocs   = typeof ACHIEVEMENT_DOCS   !== 'undefined' ? ACHIEVEMENT_DOCS   : {};
+            const config    = typeof WEEKLY_CONFIG      !== 'undefined' ? WEEKLY_CONFIG      : { dateRange: '', challenges: [] };
+            const masqSkills = typeof MASQUERADE_SKILLS !== 'undefined' ? MASQUERADE_SKILLS  : {};
 
             const getWeeklyDateRange = () => {
                 const now = new Date();
@@ -497,7 +514,14 @@
 
             const masqueradeStages = Object.entries(stages)
                 .filter(([id]) => parseInt(id) >= 1 && parseInt(id) <= 32)
-                .map(([id, name]) => ({ id, name }))
+                .map(([id, name]) => ({
+                    id,
+                    name,
+                    recommendedSkills: (masqSkills[id] || []).map(no => {
+                        const found = lib.find(s => s.no === no);
+                        return found ?? { no, spell: '未知技能' };
+                    })
+                }))
                 .sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
             const activeChallenges = computed(() =>
@@ -569,7 +593,7 @@
                 weeklyDateRange, skillSearch, skillListEl,
                 totalSkills, currentTab, masqueradeStages,
                 filteredSkills, goToSkill, activeChallenges,
-                achievementDocs: achDocs, expandedNo, toggleExpand, isExpanded,
+                achievementDocs: achDocs, expandedNo, toggleExpand, isExpanded, masqSkills,
                 getSourceIcon, stripPrefix
             };
         }
