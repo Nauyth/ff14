@@ -118,6 +118,60 @@
         .skill-tag { cursor: pointer; transition: 0.2s; background-color: #334155; border: 1px solid #475569; color: #f1f5f9; }
         .skill-tag:hover { background-color: #475569; border-color: #94a3b8; }
 
+        /* 技能圖示格子 */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 6px;
+        }
+        .skill-cell {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .skill-cell img {
+            width: 100%; aspect-ratio: 1; border-radius: 6px;
+            border: 2px solid #334155;
+            transition: 0.15s;
+            display: block;
+        }
+        .skill-cell:hover img { border-color: #60a5fa; transform: scale(1.05); }
+        .skill-empty {
+            width: 100%; aspect-ratio: 1; border-radius: 6px;
+            border: 2px solid #1e293b;
+            background: #0f172a;
+            opacity: 0.4;
+        }
+        .skill-cell-no {
+            font-size: 14px;
+            color: #64748b;
+            font-family: monospace;
+            font-weight: 700;
+        }
+        .skill-cell-no-empty { visibility: hidden; font-size: 14px; font-family: monospace; }
+        .skill-cell-tooltip {
+            position: absolute;
+            bottom: calc(100% + 4px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 11px;
+            color: #f1f5f9;
+            font-weight: 700;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s;
+            z-index: 10;
+        }
+        .skill-cell:hover .skill-cell-tooltip { opacity: 1; }
+
         .masq-card {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -297,12 +351,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5">
-                        <span
-                            v-for="s in c.recommendedSkills"
-                            @click="goToSkill(s.no)"
-                            class="skill-tag px-3 py-1 rounded text-xs font-bold"
-                        >#{{ String(s.no).padStart(2, '0') }} {{ s.spell }}</span>
+                    <div class="skill-grid">
+                        <template v-for="i in 12" :key="i">
+                            <div v-if="c.recommendedSkills[i-1]" class="skill-cell" @click="goToSkill(c.recommendedSkills[i-1].no)">
+                                <div class="skill-cell-tooltip">#{{ String(c.recommendedSkills[i-1].no).padStart(2, '0') }} {{ c.recommendedSkills[i-1].spell }}</div>
+                                <img v-if="c.recommendedSkills[i-1].icon" :src="c.recommendedSkills[i-1].icon" :alt="c.recommendedSkills[i-1].spell">
+                                <div v-else class="skill-empty"></div>
+                                <div class="skill-cell-no">{{ c.recommendedSkills[i-1].no }}</div>
+                            </div>
+                            <div v-else class="skill-cell">
+                                <div class="skill-empty"></div>
+                                <div class="skill-cell-no-empty">0</div>
+                            </div>
+                        </template>
                     </div>
                     <div v-if="c.note" class="note-bar" style="margin: 12px -20px -20px;">
                         <div class="note-bar-label">攻略備註</div>
