@@ -124,6 +124,16 @@
             grid-template-columns: repeat(12, 1fr);
             gap: 6px;
         }
+        .skill-grid .skill-cell img,
+        .skill-grid .skill-empty {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+        }
+        @media (max-width: 768px) {
+            .skill-grid {
+                grid-template-columns: repeat(8, 1fr) !important;
+            }
+        }
         .skill-cell {
             position: relative;
             cursor: pointer;
