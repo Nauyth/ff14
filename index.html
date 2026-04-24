@@ -352,7 +352,7 @@
                         </div>
                     </div>
                     <div class="skill-grid">
-                        <template v-for="i in 12" :key="i">
+                        <template v-for="i in 8" :key="i">
                             <div v-if="c.recommendedSkills[i-1]" class="skill-cell" @click="goToSkill(c.recommendedSkills[i-1].no)">
                                 <div class="skill-cell-tooltip">#{{ String(c.recommendedSkills[i-1].no).padStart(2, '0') }} {{ c.recommendedSkills[i-1].spell }}</div>
                                 <img v-if="c.recommendedSkills[i-1].icon" :src="c.recommendedSkills[i-1].icon" :alt="c.recommendedSkills[i-1].spell">
